@@ -71,55 +71,66 @@ export default function ReservationSection() {
   };
 
   const today = new Date().toISOString().split('T')[0];
+  const IconRibbon = () => (
+    <div className="flex justify-center items-center gap-3 md:gap-5 py-2 select-none opacity-60">
+      {Array.from({ length: 10 }).map((_, i) => (
+        <React.Fragment key={i}>
+          <Flame size={14} className="text-[#F5D300]" />
+          <Citrus size={14} className="text-[#F5D300]" />
+        </React.Fragment>
+      ))}
+    </div>
+  );
 
   return (
-    <section id="reservation" className="py-20 md:py-28 px-4 md:px-10 bg-[#0A1F3F] text-white relative overflow-hidden">
+    <section id="reservation" className="py-24 md:py-32 px-4 md:px-10 bg-[#0A1F3F] text-white relative overflow-hidden">
       <div ref={cr} className="absolute inset-0 pointer-events-none overflow-hidden z-10" />
 
       {/* Ambient glow */}
-      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(245,211,0,0.04) 0%, transparent 60%)' }} />
+      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] pointer-events-none rounded-full"
+        style={{ background: 'radial-gradient(circle, rgba(245,211,0,0.03) 0%, transparent 60%)' }} />
 
       <div className="max-w-[750px] mx-auto relative z-20">
         
-        {/* $1M Outer Reservation Layout */}
-        <div className="border-[6px] border-double border-[#F5D300] rounded-3xl p-6 md:p-12 bg-[#081830] shadow-2xl relative">
+        {/* $1M Outer Double-Bordered Layout */}
+        <div className="border-[6px] border-double border-[#F5D300]/30 rounded-3xl p-6 md:p-12 bg-gradient-to-b from-[#0a1e3b] to-[#06142c] shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative">
           
+          {/* Ribbon Top */}
+          <IconRibbon />
+
           {/* Header Banners */}
-          <div className="text-center mb-8">
-            <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#F5D300]/30 to-transparent mb-6" />
-            
-            <h2 className="font-serif font-black text-3xl md:text-5xl text-white tracking-tight uppercase mb-2 flex items-center justify-center gap-2.5">
-              <Flame size={32} className="text-[#F5D300]" />
+          <div className="text-center my-6">
+            <h2 className="font-serif font-black text-3xl md:text-5xl text-white tracking-tight uppercase mb-3 flex items-center justify-center gap-3">
+              <Flame size={28} className="text-[#F5D300]" />
               <span>Crack Open Your Table</span>
-              <Flame size={32} className="text-[#F5D300]" />
+              <Flame size={28} className="text-[#F5D300]" />
             </h2>
-            <p className="text-xs md:text-sm text-white/50 tracking-wider font-sans italic">
+            <p className="text-[#F5D300] text-xs md:text-sm font-bold tracking-[0.2em] font-sans uppercase">
               &ldquo;Fresh from the boil — straight to your seat&rdquo;
             </p>
-
-            <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#F5D300]/30 to-transparent mt-6" />
           </div>
 
+          {/* Ribbon Bottom */}
+          <IconRibbon />
+
           {/* INNER FORM CONTAINER */}
-          <div className="border border-white/10 rounded-2xl p-4 md:p-8 bg-[#091b35] relative mt-10">
+          <div className="border border-white/10 rounded-2xl p-5 md:p-10 bg-[#091b35]/60 backdrop-blur-sm relative mt-10">
             <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-[#091b35] p-3 rounded-full border border-white/10">
               <img src="/logo.png" alt="" className="h-8 w-auto object-contain brightness-110" />
             </div>
 
-            <form onSubmit={submit} className="flex flex-col gap-8 mt-4" noValidate>
+            <form onSubmit={submit} className="flex flex-col gap-6 mt-4" noValidate>
               
-              {/* FIELDSET 1: WHO'S EATING? */}
-              <fieldset className="border border-white/20 rounded-xl p-5 md:p-6 bg-black/10">
-                <legend className="px-3 font-serif font-black tracking-widest text-[#F5D300] uppercase text-xs md:text-sm flex items-center gap-1.5">
-                  <User size={14} />
-                  <span>WHO&apos;S EATING?</span>
+              {/* SECTION 1: WHO'S EATING? */}
+              <fieldset className="border border-white/15 rounded-2xl p-5 md:p-6 bg-[#07162c]/75 shadow-lg">
+                <legend className="px-4 text-[#F5D300] font-sans font-bold uppercase tracking-[0.25em] text-xs md:text-sm flex items-center gap-2">
+                  <User size={14} className="text-[#F5D300]" />
+                  <span>Who&apos;s Eating?</span>
                 </legend>
 
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5 mt-4">
                   <div>
-                    <label className="block text-xs font-semibold text-white/70 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                      <User size={12} className="text-white/40" />
+                    <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-sans">
                       <span>Full name</span>
                     </label>
                     <input
@@ -129,8 +140,8 @@ export default function ReservationSection() {
                       placeholder="Ahmed Ben Salem"
                       className="inp"
                       style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: e.name ? '1.5px solid #DC2626' : '1.5px solid rgba(255,255,255,0.1)',
+                        background: 'rgba(255,255,255,0.02)',
+                        border: e.name ? '1.5px solid #DC2626' : '1.5px solid rgba(255,255,255,0.08)',
                         color: '#fff',
                       }}
                     />
@@ -138,8 +149,7 @@ export default function ReservationSection() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-white/70 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                      <Phone size={12} className="text-white/40" />
+                    <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-sans">
                       <span>Phone number (WhatsApp)</span>
                     </label>
                     <div className="flex gap-2">
@@ -153,8 +163,8 @@ export default function ReservationSection() {
                         placeholder="98 900 372"
                         className="inp flex-1"
                         style={{
-                          background: 'rgba(255,255,255,0.03)',
-                          border: e.phone ? '1.5px solid #DC2626' : '1.5px solid rgba(255,255,255,0.1)',
+                          background: 'rgba(255,255,255,0.02)',
+                          border: e.phone ? '1.5px solid #DC2626' : '1.5px solid rgba(255,255,255,0.08)',
                           color: '#fff',
                         }}
                       />
@@ -164,18 +174,17 @@ export default function ReservationSection() {
                 </div>
               </fieldset>
 
-              {/* FIELDSET 2: YOUR SEAFEAST */}
-              <fieldset className="border border-white/20 rounded-xl p-5 md:p-6 bg-black/10">
-                <legend className="px-3 font-serif font-black tracking-widest text-[#F5D300] uppercase text-xs md:text-sm flex items-center gap-1.5">
-                  <Flame size={14} />
-                  <span>YOUR SEAFEAST</span>
+              {/* SECTION 2: YOUR SEAFEAST */}
+              <fieldset className="border border-white/15 rounded-2xl p-5 md:p-6 bg-[#07162c]/75 shadow-lg">
+                <legend className="px-4 text-[#F5D300] font-sans font-bold uppercase tracking-[0.25em] text-xs md:text-sm flex items-center gap-2">
+                  <Flame size={14} className="text-[#F5D300]" />
+                  <span>Your Seafeast</span>
                 </legend>
 
                 {/* Pickers Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 mt-4">
                   <div>
-                    <label className="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                      <Users size={12} className="text-white/40" />
+                    <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-sans">
                       <span>How many?</span>
                     </label>
                     <select
@@ -183,8 +192,8 @@ export default function ReservationSection() {
                       onChange={(ev) => s('guests', parseInt(ev.target.value))}
                       className="sel"
                       style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1.5px solid rgba(255,255,255,0.1)',
+                        background: 'rgba(255,255,255,0.02)',
+                        border: '1.5px solid rgba(255,255,255,0.08)',
                         color: '#fff',
                       }}
                     >
@@ -197,8 +206,7 @@ export default function ReservationSection() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                      <Calendar size={12} className="text-white/40" />
+                    <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-sans">
                       <span>Pick a date</span>
                     </label>
                     <input
@@ -208,8 +216,8 @@ export default function ReservationSection() {
                       onChange={(ev) => s('date', ev.target.value)}
                       className="inp"
                       style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: e.date ? '1.5px solid #DC2626' : '1.5px solid rgba(255,255,255,0.1)',
+                        background: 'rgba(255,255,255,0.02)',
+                        border: e.date ? '1.5px solid #DC2626' : '1.5px solid rgba(255,255,255,0.08)',
                         color: '#fff',
                       }}
                     />
@@ -217,8 +225,7 @@ export default function ReservationSection() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                      <Clock size={12} className="text-white/40" />
+                    <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-sans">
                       <span>Time</span>
                     </label>
                     <select
@@ -226,8 +233,8 @@ export default function ReservationSection() {
                       onChange={(ev) => s('time', ev.target.value)}
                       className="sel"
                       style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1.5px solid rgba(255,255,255,0.1)',
+                        background: 'rgba(255,255,255,0.02)',
+                        border: '1.5px solid rgba(255,255,255,0.08)',
                         color: '#fff',
                       }}
                     >
@@ -242,8 +249,7 @@ export default function ReservationSection() {
 
                 {/* Branch Selection */}
                 <div>
-                  <label className="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-3 flex items-center gap-1.5">
-                    <MapPin size={12} className="text-white/40" />
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-3 flex items-center gap-1.5 font-sans">
                     <span>Which branch?</span>
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -252,18 +258,18 @@ export default function ReservationSection() {
                         key={b.id}
                         type="button"
                         onClick={() => s('branch', b.id)}
-                        className={`branch-card text-left flex flex-col p-4 rounded-xl border-2 transition-all cursor-pointer ${
+                        className={`branch-card text-left flex flex-col p-4 rounded-xl border transition-all cursor-pointer ${
                           f.branch === b.id
                             ? 'border-[#F5D300] bg-[#FFFBE6] text-[#0A1F3F]'
-                            : 'border-white/10 bg-white/[0.02] text-white hover:border-white/20'
+                            : 'border-white/10 bg-white/[0.01] text-white hover:border-white/20'
                         }`}
                       >
-                        <span className="text-sm font-bold uppercase tracking-wider mb-2 flex items-center justify-between">
+                        <span className="text-sm font-bold uppercase tracking-wider mb-2 flex items-center justify-between font-sans">
                           <span className="flex items-center gap-1.5">
                             <MapPin size={14} className={f.branch === b.id ? 'text-[#0A1F3F]' : 'text-[#F5D300]'} />
                             <span>{b.name}</span>
                           </span>
-                          {f.branch === b.id ? <Check size={14} className="text-[#0A1F3F]" /> : <span className="w-3 h-3 rounded-full border border-white/30" />}
+                          {f.branch === b.id ? <Check size={14} className="text-[#0A1F3F]" /> : <span className="w-3 h-3 rounded-full border border-white/20" />}
                         </span>
                         <span className={`text-[11px] font-sans ${f.branch === b.id ? 'text-[#0A1F3F]/70' : 'text-white/40'}`}>
                           {b.address}
@@ -274,15 +280,15 @@ export default function ReservationSection() {
                 </div>
               </fieldset>
 
-              {/* FIELDSET 3: SPECIAL REQUESTS */}
-              <fieldset className="border border-white/20 rounded-xl p-5 md:p-6 bg-black/10">
-                <legend className="px-3 font-serif font-black tracking-widest text-[#F5D300] uppercase text-xs md:text-sm flex items-center gap-1.5">
-                  <MessageSquare size={14} />
-                  <span>SPECIAL REQUESTS (OPTIONAL)</span>
+              {/* SECTION 3: SPECIAL REQUESTS */}
+              <fieldset className="border border-white/15 rounded-2xl p-5 md:p-6 bg-[#07162c]/75 shadow-lg">
+                <legend className="px-4 text-[#F5D300] font-sans font-bold uppercase tracking-[0.25em] text-xs md:text-sm flex items-center gap-2">
+                  <MessageSquare size={14} className="text-[#F5D300]" />
+                  <span>Special Requests (Optional)</span>
                 </legend>
 
                 {/* Helper Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-4 mt-4">
                   {[
                     { label: 'Birthday', icon: <Cake size={11} /> },
                     { label: 'Proposal', icon: <Heart size={11} /> },
@@ -303,10 +309,10 @@ export default function ReservationSection() {
                               : (f.requests + ' ' + tag).trim()
                           )
                         }
-                        className="px-3 py-1.5 rounded-full text-xs font-semibold font-sans transition-all border cursor-pointer flex items-center gap-1"
+                        className="px-3 py-1.5 rounded-full text-xs font-semibold font-sans transition-all border border-white/10 hover:border-white/20 cursor-pointer flex items-center gap-1.5"
                         style={{
-                          background: isSelected ? 'rgba(245,211,0,0.15)' : 'rgba(255,255,255,0.03)',
-                          borderColor: isSelected ? '#F5D300' : 'rgba(255,255,255,0.1)',
+                          background: isSelected ? 'rgba(245,211,0,0.12)' : 'rgba(255,255,255,0.02)',
+                          borderColor: isSelected ? '#F5D300' : 'rgba(255,255,255,0.08)',
                           color: isSelected ? '#F5D300' : 'rgba(255,255,255,0.5)',
                         }}
                       >
@@ -324,26 +330,25 @@ export default function ReservationSection() {
                   rows={2}
                   className="inp resize-none"
                   style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1.5px solid rgba(255,255,255,0.1)',
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1.5px solid rgba(255,255,255,0.08)',
                     color: '#fff',
                   }}
                 />
               </fieldset>
 
-              {/* FIELDSET 4: CRACK THE BOIL CTA BOX */}
-              <div className="border border-white/10 rounded-xl p-4 md:p-6 bg-[#07162c]/80 text-center">
-                <div className="text-white/60 font-bold text-xs mb-4 tracking-[0.2em] flex items-center justify-center gap-1.5 select-none uppercase">
-                  <Flame size={12} className="text-[#F5D300]" />
+              {/* SECTION 4: CTA BUTTON BOX */}
+              <fieldset className="border border-white/15 rounded-2xl p-5 md:p-6 bg-[#07162c]/75 shadow-lg text-center flex flex-col items-center">
+                <legend className="px-4 text-[#F5D300] font-sans font-bold uppercase tracking-[0.25em] text-xs md:text-sm flex items-center gap-2 mx-auto">
+                  <Flame size={14} className="text-[#F5D300]" />
                   <span>Crack The Boil</span>
-                  <Flame size={12} className="text-[#F5D300]" />
-                </div>
+                </legend>
                 
                 <button
                   type="submit"
-                  className="w-full border-[6px] border-double border-[#0A1F3F] bg-[#F5D300] hover:bg-[#E0C200] text-[#0A1F3F] rounded-xl p-5 md:p-6 font-serif font-black uppercase transition-all duration-300 shadow-xl cursor-pointer"
+                  className="w-full mt-2 border-4 border-double border-[#0A1F3F] bg-[#F5D300] hover:bg-[#E0C200] text-[#0A1F3F] rounded-xl p-5 md:p-6 font-serif font-black uppercase transition-all duration-300 shadow-xl cursor-pointer hover:scale-[1.01]"
                 >
-                  <div className="text-lg md:text-2xl tracking-wider mb-1 flex items-center justify-center gap-2">
+                  <div className="text-lg md:text-2xl tracking-wider mb-2 flex items-center justify-center gap-2">
                     <Calendar size={20} />
                     <span>Reserve My Table Now</span>
                   </div>
@@ -351,11 +356,11 @@ export default function ReservationSection() {
                     You&apos;ll receive WhatsApp confirmation in 30s
                   </div>
                 </button>
-              </div>
+              </fieldset>
 
               {/* Bottom Badges */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="border border-white/10 rounded-xl p-4 bg-white/[0.01] text-center sm:text-left hover:border-white/20 transition-all duration-300">
+                <div className="border border-white/5 rounded-xl p-4 bg-white/[0.01] text-center sm:text-left hover:border-white/10 transition-all duration-300">
                   <span className="font-serif font-black text-sm text-[#F5D300] flex items-center justify-center sm:justify-start gap-1.5 mb-0.5">
                     <MessageSquare size={14} />
                     <span>WhatsApp Ready</span>
@@ -364,7 +369,7 @@ export default function ReservationSection() {
                     Confirmation in seconds
                   </span>
                 </div>
-                <div className="border border-white/10 rounded-xl p-4 bg-white/[0.01] text-center sm:text-left hover:border-white/20 transition-all duration-300">
+                <div className="border border-white/5 rounded-xl p-4 bg-white/[0.01] text-center sm:text-left hover:border-white/10 transition-all duration-300">
                   <span className="font-serif font-black text-sm text-[#F5D300] flex items-center justify-center sm:justify-start gap-1.5 mb-0.5">
                     <Check size={14} />
                     <span>No Deposit Required</span>
@@ -389,13 +394,13 @@ export default function ReservationSection() {
           </div>
 
           {/* Social Proof Footer */}
-          <div className="mt-8 text-center border-t border-white/10 pt-8 text-white/40 text-xs md:text-sm flex flex-col gap-2">
-            <p className="font-sans font-semibold flex items-center justify-center gap-1.5">
+          <div className="mt-10 text-center border-t border-white/10 pt-8 text-white/40 text-xs md:text-sm flex flex-col gap-2 font-sans">
+            <p className="font-semibold flex items-center justify-center gap-1.5">
               <Star size={14} className="text-[#F5D300] fill-[#F5D300]" />
               <span>394 happy crustaceans served this week</span>
               <Star size={14} className="text-[#F5D300] fill-[#F5D300]" />
             </p>
-            <p className="font-sans italic opacity-85">
+            <p className="italic opacity-85">
               &ldquo;Best shrimp in Tunisia — the boil is INSANE&rdquo; — Karim, La Marsa
             </p>
           </div>
