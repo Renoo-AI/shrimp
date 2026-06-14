@@ -14,8 +14,8 @@ export default function App() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const duration = 1800; // 1.8 seconds loading time
-    const intervalTime = 30;
+    const duration = 1000; // 1.0 second loading time - snappy and premium!
+    const intervalTime = 20;
     const step = 100 / (duration / intervalTime);
     
     const timer = setInterval(() => {
@@ -78,10 +78,10 @@ export default function App() {
         {loading && (
           <motion.div
             key="preloader"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100] bg-brand-navy flex flex-col justify-center items-center select-none"
+            initial={{ y: 0 }}
+            exit={{ y: '-100%' }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[100] bg-[#001C33] flex flex-col justify-center items-center select-none border-b border-brand-yellow/30 shadow-[0_15px_50px_rgba(0,0,0,0.8)]"
           >
             <div className="flex flex-col items-center max-w-xs w-full px-6">
               {/* Pulsing Logo */}
@@ -121,8 +121,14 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* 1. Global Floating Navbar */}
-      <Navbar currentPath={currentPath} navigateTo={navigateTo} />
+      {/* Main site content with parallax scale and blur transition */}
+      <motion.div
+        animate={loading ? { scale: 0.96, opacity: 0.3, filter: 'blur(8px)' } : { scale: 1, opacity: 1, filter: 'blur(0px)' }}
+        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+        className="min-h-screen w-full relative"
+      >
+        {/* 1. Global Floating Navbar */}
+        <Navbar currentPath={currentPath} navigateTo={navigateTo} />
 
       {/* 2. Visual Ambient Core Background (Restrained, elegant, non-neon glows) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -445,6 +451,7 @@ export default function App() {
         </div>
       </footer>
 
+      </motion.div>
     </div>
   );
 }
