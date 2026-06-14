@@ -1,0 +1,17 @@
+{
+  "name": "Shrimp Time — Fruits de Mer Frais",
+  "short_name": "Shrimp Time",
+  "description": "Restaurant de fruits de mer à La Marsa et L'Aouina. Menu frais, réservation WhatsApp, ambiance premium.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0A1F3F",
+  "background_color": "#0A1F3F",
+  "icons": [
+    { "src": "/logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": ["food", "restaurant"]
+}
