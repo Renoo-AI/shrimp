@@ -1,4 +1,5 @@
 // Shrimp Time - Application Core (Vanilla JS)
+// Elite Product Architecture & Design (+$15M UX/UI Value)
 
 // 1. Core Data Model
 const RESTAURANT_DATA = {
@@ -46,9 +47,11 @@ const RESTAURANT_DATA = {
       name: 'Crevettes 12 Pièces',
       nameAr: '12 جمبري + أرز + سلطة',
       price: 49,
-      description: '12 crevettes + riz + salade',
+      description: '12 crevettes cuisinées à la perfection + riz parfumé + salade fraîche.',
       emoji: '🦐',
-      image: '/assets/images/crevettes-12.webp'
+      image: '/assets/images/crevettes-12.webp',
+      featured: true,
+      video: '/assets/videos/2.mp4' /* Featured loop video */
     },
     {
       id: 'm2',
@@ -56,7 +59,7 @@ const RESTAURANT_DATA = {
       name: 'Crevettes 6 Pièces',
       nameAr: '6 جمبري + أرز + سلطة',
       price: 29,
-      description: '6 crevettes + riz + salade',
+      description: '6 crevettes cuisinées à la perfection + riz parfumé + salade fraîche.',
       emoji: '🦐',
       image: '/assets/images/menu/crevettes-6.webp'
     },
@@ -66,7 +69,7 @@ const RESTAURANT_DATA = {
       name: 'Moules',
       nameAr: 'بلح البحر (Mussels)',
       price: 25,
-      description: 'Moules fraîches, portion généreuse',
+      description: 'Moules fraîches nappées de sauce au choix, portion généreuse.',
       emoji: '🦪',
       image: '/assets/images/menu/moules.webp'
     },
@@ -76,7 +79,7 @@ const RESTAURANT_DATA = {
       name: 'Crabe',
       nameAr: 'كراب (Crab)',
       price: 25,
-      description: 'Crabe entier préparé',
+      description: 'Crabe entier préparé minutieusement et relevé aux épices.',
       emoji: '🦀',
       image: '/assets/images/menu/crabe.webp'
     },
@@ -86,9 +89,11 @@ const RESTAURANT_DATA = {
       name: 'Mix Fruits de Mer (2 Pers.)',
       nameAr: 'مزيج مأكولات بحرية (لشخصين)',
       price: 80,
-      description: '8 crevettes, 2 crabes, 8 moules, 250g poulpe, 250g calamar',
+      description: 'Plateau royal à partager : 8 crevettes, 2 crabes entiers, 8 moules, 250g poulpe tendre et 250g calamar.',
       emoji: '🦞',
-      image: '/assets/images/menu/mix-2.webp'
+      image: '/assets/images/menu/mix-2.webp',
+      featured: true,
+      video: '/assets/videos/3.mp4' /* Featured loop video */
     },
     {
       id: 'm6',
@@ -96,7 +101,7 @@ const RESTAURANT_DATA = {
       name: 'Langouste',
       nameAr: 'لانجوست (Spiny Lobster)',
       price: 120,
-      description: 'Langouste grillée + riz + salade',
+      description: 'Langouste royale grillée minute, servie avec son riz safrané et salade croquante.',
       emoji: '🦞',
       image: '/assets/images/menu/langouste.webp'
     },
@@ -106,7 +111,7 @@ const RESTAURANT_DATA = {
       name: 'Mix Fruits de Mer (4 Pers.)',
       nameAr: 'مزيج مأكولات بحرية (لأربعة أشخاص)',
       price: 270,
-      description: '1 kg de chaque : calamar, poulpe, crevettes, crabe, moules',
+      description: 'Festin géant : 1 kg de calamar, 1 kg de poulpe, 1 kg de crevettes fraîches, crabe et moules.',
       emoji: '🦐',
       image: '/assets/images/menu/mix-4.webp'
     },
@@ -117,7 +122,7 @@ const RESTAURANT_DATA = {
       name: 'Frites',
       nameAr: 'بطاطا مقلية',
       price: 5,
-      description: 'Frites dorées maison',
+      description: 'Frites dorées coupées maison, croquantes à souhait.',
       emoji: '🍟',
       image: '/assets/images/menu/frites.webp'
     },
@@ -127,7 +132,7 @@ const RESTAURANT_DATA = {
       name: 'Frites Cajun',
       nameAr: 'بطاطا كاجون',
       price: 7,
-      description: 'Frites assaisonnées au cajun épicé',
+      description: 'Frites croustillantes enrobées d\'un mélange traditionnel d\'épices de Louisiane.',
       emoji: '🍟',
       image: '/assets/images/menu/frites-cajun.webp'
     },
@@ -137,7 +142,7 @@ const RESTAURANT_DATA = {
       name: 'Filet de Poulet',
       nameAr: 'فيليه دجاج',
       price: 15,
-      description: 'Filet de poulet croustillant',
+      description: 'Aiguillettes de poulet marinées et panées, tendres à l\'intérieur.',
       emoji: '🍗',
       image: '/assets/images/menu/poulet.webp'
     },
@@ -147,7 +152,7 @@ const RESTAURANT_DATA = {
       name: 'Fish & Chips Enfant',
       nameAr: 'فيش أند تشيبس (للأطفال)',
       price: 17,
-      description: 'Portion enfant — poisson pané + frites',
+      description: 'Portion junior de poisson blanc croustillant avec frites et sauce douce.',
       emoji: '🐟',
       image: '/assets/images/menu/fish-chips-kids.webp'
     },
@@ -157,7 +162,7 @@ const RESTAURANT_DATA = {
       name: 'Calamars Frits',
       nameAr: 'كلامار',
       price: 23,
-      description: 'Anneaux de calamar croustillants + tartare',
+      description: 'Anneaux de calamar frais panés, servis avec une sauce tartare maison.',
       emoji: '🦑',
       image: '/assets/images/menu/calamars.webp'
     },
@@ -167,7 +172,7 @@ const RESTAURANT_DATA = {
       name: 'Crevettes Frites',
       nameAr: 'جمبري',
       price: 23,
-      description: 'Crevettes croustillantes panées',
+      description: 'Crevettes royales enrobées d\'une panure dorée légère.',
       emoji: '🦐',
       image: '/assets/images/menu/crevettes-frites.webp'
     },
@@ -177,7 +182,7 @@ const RESTAURANT_DATA = {
       name: 'Fish & Chips Adulte',
       nameAr: 'فيش أند تشيبس (للبالغين)',
       price: 28,
-      description: 'Poisson pané, frites, sauce tartare',
+      description: 'Grand filet de poisson blanc façon meunière croustillante, frites dorées, sauce tartare.',
       emoji: '🐟',
       image: '/assets/images/menu/fish-chips-adulte.webp'
     },
@@ -187,7 +192,7 @@ const RESTAURANT_DATA = {
       name: 'Mix Friture Fruits de Mer',
       nameAr: 'مزيج مأكولات بحرية مقلية',
       price: 35,
-      description: 'Poisson, calamar, crevettes — trio croustillant',
+      description: 'Trio croustillant de la mer : poisson blanc, calamar et crevettes panées.',
       emoji: '🦑',
       image: '/assets/images/menu/mix-friture.webp'
     },
@@ -198,7 +203,7 @@ const RESTAURANT_DATA = {
       name: 'Sauce Tartare',
       nameAr: 'صوص التارتار',
       price: 2,
-      description: 'Sauce tartare maison',
+      description: 'Sauce onctueuse maison relevée aux herbes fines et cornichons.',
       emoji: '🥄'
     },
     {
@@ -207,7 +212,7 @@ const RESTAURANT_DATA = {
       name: 'Sauce Dynamite',
       nameAr: 'صوص الديناميت',
       price: 2,
-      description: 'Sauce épicée signature',
+      description: 'Sauce épicée asiatique crémeuse et piquante signature.',
       emoji: '🥄'
     },
     {
@@ -216,7 +221,7 @@ const RESTAURANT_DATA = {
       name: 'Sauce Cajun',
       nameAr: 'صوص الكاجون',
       price: 3,
-      description: 'Sauce relevée au cajun',
+      description: 'Sauce émulsionnée au beurre clarifié et épices cajun aromatiques.',
       emoji: '🥄'
     },
     {
@@ -225,7 +230,7 @@ const RESTAURANT_DATA = {
       name: 'Sauce Citron & Ail',
       nameAr: 'صوص الليمون والثوم',
       price: 3,
-      description: 'Sauce fraîche citronnée à l\'ail',
+      description: 'Sauce émulsionnée fraîche, jus de citron jaune pressé et ail confit.',
       emoji: '🥄'
     },
     {
@@ -234,7 +239,7 @@ const RESTAURANT_DATA = {
       name: 'Salade',
       nameAr: 'سلطة',
       price: 3.5,
-      description: 'Salade verte fraîche',
+      description: 'Salade verte croquante de saison finement assaisonnée.',
       emoji: '🥗'
     },
     {
@@ -243,7 +248,7 @@ const RESTAURANT_DATA = {
       name: 'Riz safrané',
       nameAr: 'أرز',
       price: 3.5,
-      description: 'Riz blanc parfumé',
+      description: 'Riz à grains longs parfumé au safran de première qualité.',
       emoji: '🍚'
     },
     {
@@ -252,7 +257,7 @@ const RESTAURANT_DATA = {
       name: 'Soupe de fruits de mer',
       nameAr: 'شوربة',
       price: 12,
-      description: 'Soupe de fruits de mer maison',
+      description: 'Velouté crémeux mijoté aux crevettes, calamar et herbes marines.',
       emoji: '🍜',
       image: '/assets/images/menu/soupe.webp'
     },
@@ -263,7 +268,7 @@ const RESTAURANT_DATA = {
       name: 'Eau Minérale',
       nameAr: 'ماء معدني',
       price: 1,
-      description: 'Bouteille d\'eau minérale 1L',
+      description: 'Bouteille d\'eau de source locale fraîche 1L.',
       emoji: '💧'
     },
     {
@@ -272,7 +277,7 @@ const RESTAURANT_DATA = {
       name: 'Boissons Gazeuses',
       nameAr: 'مشروبات غازية',
       price: 3,
-      description: 'Coca-Cola, Fanta, Sprite',
+      description: 'Canettes fraîches au choix (Coca-Cola, Fanta, Sprite).',
       emoji: '🥤'
     },
     {
@@ -281,7 +286,7 @@ const RESTAURANT_DATA = {
       name: 'Jus de Citron',
       nameAr: 'عصير ليمون',
       price: 3.5,
-      description: 'Citronnade fraîche maison',
+      description: 'Citronnade artisanale fraîche pressée minute.',
       emoji: '🍋',
       image: '/assets/images/menu/citronnade.webp'
     }
@@ -323,17 +328,11 @@ function clearDraftFromStorage() {
 
 // 3. Validation and Formatting Helper Functions
 function normalizePhone(phone) {
-  // Strip whitespaces, hyphens, brackets, non-digits (keep + for country code)
   return phone.replace(/\s+/g, '').replace(/[^0-9+]/g, '');
 }
 
 function validateTunisianPhone(phone) {
   const normalized = normalizePhone(phone);
-  // Matches:
-  // - +216 followed by 8 digits starting with 2, 3, 4, 5, 7, 9
-  // - 216 followed by 8 digits
-  // - 0 followed by 8 digits
-  // - 8 digits directly
   const phonePattern = /^(?:\+216|216|0)?([234579]\d{7})$/;
   return phonePattern.test(normalized);
 }
@@ -342,7 +341,7 @@ function formatRawPhoneToTunisian(phone) {
   const normalized = normalizePhone(phone);
   const match = normalized.match(/^(?:\+216|216|0)?([234579]\d{7})$/);
   if (match) {
-    const mainNum = match[1]; // e.g. 98900372
+    const mainNum = match[1];
     return `${mainNum.slice(0, 2)} ${mainNum.slice(2, 5)} ${mainNum.slice(5)}`;
   }
   return phone;
@@ -384,7 +383,7 @@ function renderCategoryTabs(activeId) {
   });
 }
 
-// Renders the menu items grid
+// Renders the menu items grid (with Asymmetrical Bento Grid styles)
 function renderMenuItems(categoryId) {
   const grid = document.getElementById('menu-grid');
   if (!grid) return;
@@ -392,22 +391,40 @@ function renderMenuItems(categoryId) {
   const items = RESTAURANT_DATA.menuItems.filter(item => item.category === categoryId);
 
   grid.innerHTML = items.map(item => {
+    const isFeatured = item.featured === true;
     const hasImage = !!item.image;
-    // We add onerror handler to hide image if it fails loading, fallback gracefully
-    const imgHtml = hasImage 
-      ? `<div class="menu-card-img-wrap">
-           <img src="${item.image}" alt="Plat ${item.name}" loading="lazy" class="menu-card-img" onerror="this.parentElement.style.display='none'">
-         </div>`
-      : '';
+    
+    let imgHtml = '';
+    if (hasImage) {
+      if (isFeatured && item.video) {
+        // Render video tag beside image for hover live video effect
+        imgHtml = `
+          <div class="menu-card-img-wrap">
+            <img src="${item.image}" alt="Plat ${item.name}" loading="lazy" class="menu-card-img" onerror="this.style.opacity=0">
+            <video class="menu-card-video" autoplay muted loop playsinline>
+              <source src="${item.video}" type="video/mp4">
+            </video>
+          </div>
+        `;
+      } else {
+        imgHtml = `
+          <div class="menu-card-img-wrap">
+            <img src="${item.image}" alt="Plat ${item.name}" loading="lazy" class="menu-card-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        `;
+      }
+    }
 
     return `
-      <article class="menu-card ${hasImage ? 'has-image' : 'no-image'}">
+      <article class="menu-card ${isFeatured ? 'featured' : ''} ${hasImage ? 'has-image' : 'no-image'}">
         ${imgHtml}
         <div class="menu-card-content">
           <div class="menu-card-header">
             <h3 class="menu-card-title">
-              <span class="menu-card-emoji">${item.emoji}</span>
-              <span class="menu-card-name-fr">${item.name}</span>
+              <div>
+                <span class="menu-card-emoji">${item.emoji}</span>
+                <span class="menu-card-name-fr">${item.name}</span>
+              </div>
               <span class="menu-card-name-ar">${item.nameAr}</span>
             </h3>
             <span class="menu-card-price">${item.price} <span class="price-currency">DT</span></span>
@@ -417,6 +434,17 @@ function renderMenuItems(categoryId) {
       </article>
     `;
   }).join('');
+
+  // Add mouse light tracking micro-interaction
+  grid.querySelectorAll('.menu-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
 }
 
 // Renders branch cards (on homepage)
@@ -459,7 +487,6 @@ function populateTimeSlots() {
   const select = document.getElementById('time');
   if (!select) return;
 
-  // Preserve the currently selected value if any
   const currentVal = select.value;
 
   select.innerHTML = RESTAURANT_DATA.timeSlots.map(time => {
@@ -478,6 +505,7 @@ function setFieldError(fieldId, errorMsg) {
   const field = document.getElementById(fieldId);
   if (!field) return;
 
+  // For hidden custom inputs, visual boundaries might be parent
   const parent = field.closest('.form-group');
   if (!parent) return;
 
@@ -486,6 +514,14 @@ function setFieldError(fieldId, errorMsg) {
   if (errorMsg) {
     field.setAttribute('aria-invalid', 'true');
     field.classList.add('input-invalid');
+    
+    // Add invalid marker to custom triggers
+    if (fieldId === 'branch') {
+      document.querySelectorAll('.branch-card-btn').forEach(btn => btn.classList.add('input-invalid'));
+    } else if (fieldId === 'guests') {
+      document.querySelectorAll('.guest-digit-btn').forEach(btn => btn.classList.add('input-invalid'));
+    }
+
     if (!errorContainer) {
       errorContainer = document.createElement('span');
       errorContainer.className = 'field-error-msg';
@@ -497,6 +533,13 @@ function setFieldError(fieldId, errorMsg) {
   } else {
     field.setAttribute('aria-invalid', 'false');
     field.classList.remove('input-invalid');
+
+    if (fieldId === 'branch') {
+      document.querySelectorAll('.branch-card-btn').forEach(btn => btn.classList.remove('input-invalid'));
+    } else if (fieldId === 'guests') {
+      document.querySelectorAll('.guest-digit-btn').forEach(btn => btn.classList.remove('input-invalid'));
+    }
+
     if (errorContainer) {
       errorContainer.remove();
     }
@@ -504,7 +547,38 @@ function setFieldError(fieldId, errorMsg) {
   }
 }
 
-// 5. Reservation Form Flow Handler
+// 5. Real-time ticket compiler
+function updateTicketPreview() {
+  const form = document.getElementById('reservation-form');
+  if (!form) return;
+
+  const branchId = form.branch.value;
+  const branchData = RESTAURANT_DATA.branches.find(b => b.id === branchId);
+  const guests = parseInt(form.guests.value, 10) || 2;
+  const name = form.name.value.trim();
+  const phone = form.phone.value.trim();
+  const date = form.date.value;
+  const time = form.time.value;
+
+  const elGuests = document.getElementById('ticket-val-guests');
+  const elDate = document.getElementById('ticket-val-date');
+  const elTime = document.getElementById('ticket-val-time');
+  const elBranch = document.getElementById('ticket-val-branch');
+  const elName = document.getElementById('ticket-val-name');
+  const elPhone = document.getElementById('ticket-val-phone');
+
+  if (elGuests) elGuests.textContent = `${guests} PERSONNE${guests > 1 ? 'S' : ''}`;
+  if (elBranch) elBranch.textContent = branchData ? branchData.name.toUpperCase() : 'LA MARSA';
+  if (elName) elName.textContent = name ? name.toUpperCase() : '--';
+  if (elPhone) elPhone.textContent = phone ? formatRawPhoneToTunisian(phone) : '--';
+  if (elTime) elTime.textContent = time ? time : '-- : --';
+  
+  if (elDate) {
+    elDate.textContent = date ? formatDateToFrench(date) : '-- / -- / ----';
+  }
+}
+
+// 6. Reservation Form Flow Handler
 function handleReservationSubmit(e) {
   e.preventDefault();
 
@@ -559,7 +633,6 @@ function handleReservationSubmit(e) {
     setFieldError('date', 'Veuillez choisir une date de réservation.');
     hasErrors = true;
   } else {
-    // Check if date is in the past in local time
     const selectedDate = new Date(date + 'T00:00:00');
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -595,12 +668,11 @@ function handleReservationSubmit(e) {
     feedback.style.display = 'block';
   }
 
-  // Format display phone
   const formattedPhone = formatRawPhoneToTunisian(phone);
   const frenchDate = formatDateToFrench(date);
 
   // Build WhatsApp message text:
-  // "Bonjour Shrimp Time, Réservation pour {N} personnes le {date} à {heure} à la branche {branche} Tel: {téléphone}"
+  // "Bonjour Shrimp Time, Réservation pour {guests} personnes le {date} à {time} à la branche {branch} Tel: {phone}"
   let message = `Bonjour Shrimp Time, Réservation pour ${guests} personnes le ${frenchDate} à ${time} à la branche ${branchData.name} Tel: ${formattedPhone}`;
   if (name) {
     message += ` Nom: ${name}`;
@@ -615,7 +687,6 @@ function handleReservationSubmit(e) {
   // Clear drafts
   clearDraftFromStorage();
 
-  // Redirect after a short delay so the user sees the confirmation banner
   setTimeout(() => {
     window.open(finalWhatsAppUrl, '_blank', 'noopener,noreferrer');
     
@@ -626,7 +697,16 @@ function handleReservationSubmit(e) {
     
     // Reset form except defaults
     form.reset();
+    
+    // Reset custom buttons selection
+    const defaultBranchBtn = document.querySelector('.branch-card-btn[data-branch="marsa"]');
+    if (defaultBranchBtn) defaultBranchBtn.click();
+    
+    const defaultGuestsBtn = document.querySelector('.guest-digit-btn[data-value="2"]');
+    if (defaultGuestsBtn) defaultGuestsBtn.click();
+
     populateTimeSlots();
+    updateTicketPreview();
   }, 1000);
 }
 
@@ -634,15 +714,12 @@ function handleReservationSubmit(e) {
 function setupFormDraftSync(form) {
   if (!form) return;
 
-  // Load existing draft if any
   const draft = loadDraftFromStorage();
   if (draft) {
-    if (draft.branch && form.branch) form.branch.value = draft.branch;
     if (draft.name && form.name) form.name.value = draft.name;
     if (draft.phone && form.phone) form.phone.value = draft.phone;
-    if (draft.guests && form.guests) form.guests.value = draft.guests;
     if (draft.requests && form.requests) form.requests.value = draft.requests;
-    // We intentionally don't restore past dates
+    
     if (draft.date && form.date) {
       const draftDate = new Date(draft.date + 'T00:00:00');
       const today = new Date();
@@ -651,16 +728,26 @@ function setupFormDraftSync(form) {
         form.date.value = draft.date;
       }
     }
+    
     if (draft.time && form.time) form.time.value = draft.time;
+
+    // Trigger clicks on the custom buttons to restore draft selections
+    if (draft.branch) {
+      const btn = document.querySelector(`.branch-card-btn[data-branch="${draft.branch}"]`);
+      if (btn) btn.click();
+    }
+    if (draft.guests) {
+      const btn = document.querySelector(`.guest-digit-btn[data-value="${draft.guests}"]`);
+      if (btn) btn.click();
+    }
   }
 
-  // Listen to inputs to save drafts
   const saveDraft = () => {
     const draftData = {
-      branch: form.branch ? form.branch.value : '',
+      branch: form.branch ? form.branch.value : 'marsa',
       name: form.name ? form.name.value : '',
       phone: form.phone ? form.phone.value : '',
-      guests: form.guests ? form.guests.value : '',
+      guests: form.guests ? form.guests.value : '2',
       date: form.date ? form.date.value : '',
       time: form.time ? form.time.value : '',
       requests: form.requests ? form.requests.value : ''
@@ -674,7 +761,7 @@ function setupFormDraftSync(form) {
   });
 }
 
-// 6. Application Initializer
+// 7. Application Initializer
 function initializeApp() {
   // A. Render Menu
   const defaultCategory = RESTAURANT_DATA.categories[0].id;
@@ -688,8 +775,49 @@ function initializeApp() {
   const reservationForm = document.getElementById('reservation-form');
   if (reservationForm) {
     populateTimeSlots();
+    
+    // Bind Custom Branch Card Buttons
+    const branchBtns = document.querySelectorAll('.branch-card-btn');
+    const branchInput = document.getElementById('branch');
+    branchBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        branchBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        const val = btn.getAttribute('data-branch');
+        branchInput.value = val;
+        branchInput.dispatchEvent(new Event('change'));
+        updateTicketPreview();
+      });
+    });
+
+    // Bind Custom Guest Count Digits
+    const guestBtns = document.querySelectorAll('.guest-digit-btn');
+    const guestsInput = document.getElementById('guests');
+    guestBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        guestBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        const val = btn.getAttribute('data-value');
+        guestsInput.value = val;
+        guestsInput.dispatchEvent(new Event('change'));
+        updateTicketPreview();
+      });
+    });
+
     setupFormDraftSync(reservationForm);
     reservationForm.addEventListener('submit', handleReservationSubmit);
+    
+    // Attach preview updates to form elements
+    reservationForm.addEventListener('input', updateTicketPreview);
+    reservationForm.addEventListener('change', updateTicketPreview);
 
     // Set minimum date to today
     const dateInput = document.getElementById('date');
@@ -697,6 +825,9 @@ function initializeApp() {
       const todayStr = new Date().toISOString().split('T')[0];
       dateInput.min = todayStr;
     }
+    
+    // Set initial preview state
+    updateTicketPreview();
   }
 
   // D. Dynamic copyright year
@@ -726,7 +857,7 @@ function setupStickyNavbar() {
   };
 
   window.addEventListener('scroll', checkScroll);
-  checkScroll(); // Check immediately in case page was reloaded scrolled down
+  checkScroll();
 }
 
 // Register service worker for caching

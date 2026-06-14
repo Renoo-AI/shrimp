@@ -7,7 +7,7 @@
   <!-- SEO Primary Metadata -->
   <title>Shrimp Time | Fruits de Mer Frais – La Marsa & L'Aouina</title>
   <meta name="description" content="Shrimp Time — Restaurant de fruits de mer à La Marsa et L'Aouina. Menu frais, réservation WhatsApp, ambiance premium. Note 4.4★ sur Google." />
-  <meta name="theme-color" content="#0A1F3F" />
+  <meta name="theme-color" content="#03060f" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -31,7 +31,10 @@
   <link rel="apple-touch-icon" href="/assets/images/logo.png" />
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Stylesheet -->
+  <!-- Stylesheet connection & Google Fonts preconnect for faster rendering -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Libre+Barcode+39&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
 
   <!-- Structured Data JSON-LD (SEO) -->
@@ -50,6 +53,7 @@
       "ratingValue": "4.4",
       "reviewCount": "394",
       "bestRating": "5"
+      "worstRating": "1"
     },
     "servesCuisine": "Seafood",
     "priceRange": "$$",
@@ -117,7 +121,7 @@
   <header class="site-header">
     <div class="container site-nav">
       <a href="/" class="brand" aria-label="Shrimp Time Accueil">
-        <span class="brand-icon">🦐</span>
+        <div class="brand-icon">🦐</div>
         <span>Shrimp Time</span>
       </a>
       
@@ -136,14 +140,22 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero">
+      <!-- Background Autoplay Loop Video -->
+      <div class="hero-video-bg" aria-hidden="true">
+        <video autoplay muted loop playsinline>
+          <source src="/assets/videos/1.mp4" type="video/mp4">
+        </video>
+      </div>
+
       <div class="container hero-grid">
         <!-- Left Column: Content -->
         <div class="hero-content">
           <div class="hero-badge">
+            <span class="live-indicator-dot"></span>
             <span>📍 La Marsa & L'Aouina</span>
           </div>
-          <h1 class="hero-title">Des fruits de mer <em>frais</em>, servis dans une ambiance <em>premium</em>.</h1>
-          <p class="hero-subtitle">Shrimp Time propose un menu simple et inspiré, des réservations rapides par WhatsApp, et deux adresses incontournables à Tunis.</p>
+          <h1 class="hero-title">des fruits de mer <em>frais</em>, servis dans une ambiance <em>premium</em>.</h1>
+          <p class="hero-subtitle">Shrimp Time propose une carte de fruits de mer saisis minute, deux adresses incontournables à Tunis, et des réservations de table ultra-rapides via WhatsApp.</p>
           
           <div class="hero-actions">
             <a href="#menu" class="btn btn-primary">Découvrir le menu</a>
@@ -156,16 +168,20 @@
           </div>
         </div>
 
-        <!-- Right Column: Visual Stack -->
+        <!-- Right Column: Asymmetrical Visual Gallery Stage -->
         <div class="hero-visual-stack" aria-hidden="true">
-          <div class="visual-card-primary">
+          <div class="visual-canvas">
             <img src="/assets/images/crevettes-12.webp" alt="Plateau de crevettes frais avec riz et salade">
           </div>
-          <div class="visual-card-secondary">
-            <div class="visual-card-secondary-content">
-              <span class="visual-card-secondary-title">Fruits de Mer Frais</span>
-              <span class="visual-card-secondary-desc">Préparés minute et assaisonnés selon vos désirs.</span>
-            </div>
+          <!-- Floating Badge 1 -->
+          <div class="visual-card-floating top-left">
+            <span class="visual-card-floating-title">Signature</span>
+            <span class="visual-card-floating-text">Crevettes Cajun</span>
+          </div>
+          <!-- Floating Badge 2 -->
+          <div class="visual-card-floating bottom-right">
+            <span class="visual-card-floating-title">Fraîcheur</span>
+            <span class="visual-card-floating-text">Arrivage Quotidien</span>
           </div>
         </div>
       </div>
@@ -175,9 +191,9 @@
     <section id="menu" class="section section-sand">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Aperçu de la carte</span>
-          <h2 class="section-title">Notre Menu</h2>
-          <p class="section-desc">Choisissez parmi nos fruits de mer, fritures croustillantes, accompagnements et boissons fraîches. Tous les prix sont en DT.</p>
+          <span class="section-eyebrow">La sélection du jour</span>
+          <h2 class="section-title">Notre <em>Menu</em></h2>
+          <p class="section-desc">Commandez parmi nos fruits de mer, fritures croustillantes, accompagnements et boissons. Tous les prix sont exprimés en DT.</p>
         </div>
 
         <!-- Dynamic Category Toggles -->
@@ -185,7 +201,7 @@
           <!-- Filled dynamically by app.js -->
         </div>
 
-        <!-- Dynamic Items Grid -->
+        <!-- Dynamic Items Bento Grid -->
         <div class="menu-grid" id="menu-grid">
           <!-- Filled dynamically by app.js -->
         </div>
@@ -198,7 +214,7 @@
 
         <!-- Secondary Detailed Menu CTA -->
         <div class="menu-cta-wrap">
-          <a href="/menu/index.html" class="btn btn-primary">Parcourir le menu complet →</a>
+          <a href="/menu/index.html" class="btn btn-secondary">Parcourir le menu complet →</a>
         </div>
       </div>
     </section>
@@ -207,9 +223,9 @@
     <section id="branches" class="section section-white">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Nos branches</span>
-          <h2 class="section-title">Deux restaurants à Tunis</h2>
-          <p class="section-desc">Deux adresses accueillantes, la même passion pour les saveurs marines authentiques.</p>
+          <span class="section-eyebrow">Nos adresses</span>
+          <h2 class="section-title">Deux restaurants à <em>Tunis</em></h2>
+          <p class="section-desc">Deux succursales accueillantes, la même passion pour les saveurs marines authentiques.</p>
         </div>
 
         <!-- Location Cards Grid -->
@@ -223,87 +239,143 @@
     <section id="reservation" class="section section-sand">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Réservation</span>
-          <h2 class="section-title">Réservez votre table en direct</h2>
-          <p class="section-desc">Remplissez le formulaire en quelques clics, nous préparons votre message et vous le validez sans engagement via WhatsApp.</p>
+          <span class="section-eyebrow">Atelier Réservation</span>
+          <h2 class="section-title">Réservez votre <em>table</em> en direct</h2>
+          <p class="section-desc">Remplissez le formulaire en quelques instants. Votre message WhatsApp se prépare en temps réel sous vos yeux.</p>
         </div>
 
-        <!-- Reservation Card Wrapper -->
-        <div class="reservation-card">
-          <form id="reservation-form" class="reservation-form-grid" novalidate>
-            
-            <div class="form-group">
-              <label for="branch" class="form-label">Succursale</label>
-              <select id="branch" name="branch" class="form-select" required>
-                <option value="marsa">La Marsa (Plage, face Zephyr)</option>
-                <option value="aouina">L'Aouina (Cité El Wahat)</option>
-              </select>
-            </div>
+        <!-- Reservation Split Layout Wrapper -->
+        <div class="reservation-layout-wrap">
+          
+          <!-- Left Side: Form Card -->
+          <div class="reservation-card">
+            <form id="reservation-form" class="reservation-form-grid" novalidate>
+              
+              <!-- Custom Branch Selector -->
+              <div class="form-group full-width">
+                <label class="form-label">Choisissez votre succursale</label>
+                <div class="branch-selector" role="radiogroup" aria-label="Succursales" id="branch-radiogroup">
+                  <button type="button" class="branch-card-btn active" data-branch="marsa" role="radio" aria-checked="true">
+                    <div>
+                      <span class="branch-btn-name">La Marsa</span>
+                      <span class="branch-btn-sub">Plage, face au centre commercial Zephyr</span>
+                    </div>
+                  </button>
+                  <button type="button" class="branch-card-btn" data-branch="aouina" role="radio" aria-checked="false">
+                    <div>
+                      <span class="branch-btn-name">L'Aouina</span>
+                      <span class="branch-btn-sub">Sous le Centre Médical Aïcha, Cité El Wahat</span>
+                    </div>
+                  </button>
+                </div>
+                <input type="hidden" id="branch" name="branch" value="marsa" required />
+              </div>
 
-            <div class="form-group">
-              <label for="guests" class="form-label">Nombre d'invités</label>
-              <select id="guests" name="guests" class="form-select" required>
-                <!-- Generated 1 to 20 dynamically or hardcoded -->
-                <option value="1">1 personne</option>
-                <option value="2" selected>2 personnes</option>
-                <option value="3">3 personnes</option>
-                <option value="4">4 personnes</option>
-                <option value="5">5 personnes</option>
-                <option value="6">6 personnes</option>
-                <option value="7">7 personnes</option>
-                <option value="8">8 personnes</option>
-                <option value="9">9 personnes</option>
-                <option value="10">10 personnes</option>
-                <option value="11">11 personnes</option>
-                <option value="12">12 personnes</option>
-                <option value="13">13 personnes</option>
-                <option value="14">14 personnes</option>
-                <option value="15">15 personnes</option>
-                <option value="16">16 personnes</option>
-                <option value="17">17 personnes</option>
-                <option value="18">18 personnes</option>
-                <option value="19">19 personnes</option>
-                <option value="20">20 personnes</option>
-              </select>
-            </div>
+              <!-- Custom Guest Digit Selector -->
+              <div class="form-group full-width">
+                <label class="form-label">Nombre d'invités</label>
+                <div class="guest-digits-container">
+                  <div class="guest-digits" role="radiogroup" aria-label="Nombre d'invités" id="guests-radiogroup">
+                    <button type="button" class="guest-digit-btn" data-value="1" role="radio" aria-checked="false">1</button>
+                    <button type="button" class="guest-digit-btn active" data-value="2" role="radio" aria-checked="true">2</button>
+                    <button type="button" class="guest-digit-btn" data-value="3" role="radio" aria-checked="false">3</button>
+                    <button type="button" class="guest-digit-btn" data-value="4" role="radio" aria-checked="false">4</button>
+                    <button type="button" class="guest-digit-btn" data-value="5" role="radio" aria-checked="false">5</button>
+                    <button type="button" class="guest-digit-btn" data-value="6" role="radio" aria-checked="false">6</button>
+                    <button type="button" class="guest-digit-btn" data-value="7" role="radio" aria-checked="false">7</button>
+                    <button type="button" class="guest-digit-btn" data-value="8" role="radio" aria-checked="false">8+</button>
+                  </div>
+                </div>
+                <input type="hidden" id="guests" name="guests" value="2" required />
+              </div>
 
-            <div class="form-group">
-              <label for="name" class="form-label">Votre Nom</label>
-              <input id="name" name="name" type="text" class="form-input" placeholder="Ex: Ahmed Ben Salem" required />
-            </div>
+              <!-- Floating Input 1: Nom -->
+              <div class="form-group floating-group">
+                <input id="name" name="name" type="text" class="form-input" placeholder=" " required />
+                <label for="name" class="form-label-float">Votre Nom</label>
+              </div>
 
-            <div class="form-group">
-              <label for="phone" class="form-label">Numéro de téléphone</label>
-              <input id="phone" name="phone" type="tel" class="form-input" placeholder="Ex: 98 900 372" required />
-            </div>
+              <!-- Floating Input 2: Phone -->
+              <div class="form-group floating-group">
+                <input id="phone" name="phone" type="tel" class="form-input" placeholder=" " required />
+                <label for="phone" class="form-label-float">Téléphone</label>
+              </div>
 
-            <div class="form-group">
-              <label for="date" class="form-label">Date souhaitée</label>
-              <input id="date" name="date" type="date" class="form-input" required />
-            </div>
+              <!-- Select Date -->
+              <div class="form-group">
+                <label for="date" class="form-label">Date souhaitée</label>
+                <input id="date" name="date" type="date" class="form-select-native" required />
+              </div>
 
-            <div class="form-group">
-              <label for="time" class="form-label">Heure</label>
-              <select id="time" name="time" class="form-select" required>
-                <!-- Filled dynamically by app.js from allowed slots -->
-              </select>
-            </div>
+              <!-- Select Time -->
+              <div class="form-group">
+                <label for="time" class="form-label">Heure de réservation</label>
+                <select id="time" name="time" class="form-select-native" required>
+                  <!-- Filled dynamically by app.js -->
+                </select>
+              </div>
 
-            <div class="form-group full-width">
-              <label for="requests" class="form-label">Demandes particulières (Facultatif)</label>
-              <textarea id="requests" name="requests" class="form-textarea" placeholder="Allergies, table près de la fenêtre, anniversaire..."></textarea>
-            </div>
+              <!-- Floating Textarea: Demandes -->
+              <div class="form-group floating-group full-width">
+                <textarea id="requests" name="requests" class="form-textarea" placeholder=" "></textarea>
+                <label for="requests" class="form-label-float">Demandes particulières (Allergies, table préférée...)</label>
+              </div>
 
-            <!-- Banner for Inline Form Errors / Success feedback -->
-            <div class="form-group full-width">
-              <div id="reservation-feedback" class="form-feedback-banner" role="alert" aria-live="polite"></div>
-            </div>
+              <!-- Form feedback banner -->
+              <div class="form-group full-width">
+                <div id="reservation-feedback" class="form-feedback-banner" role="alert" aria-live="polite"></div>
+              </div>
 
-            <div class="form-group full-width">
-              <button class="btn btn-primary reservation-submit-btn" type="submit">Réserver maintenant →</button>
-              <p class="reservation-trust-note">Sans engagement. Confirmation instantanée après redirection WhatsApp.</p>
+              <!-- Submit Button -->
+              <div class="form-group full-width">
+                <button class="btn btn-primary reservation-submit-btn" type="submit">Réserver maintenant →</button>
+                <p class="reservation-trust-note">Confirmation instantanée après redirection WhatsApp automatique.</p>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right Side: Real-time Ticket Preview -->
+          <div class="ticket-preview-container">
+            <div class="ticket-preview-card" id="ticket-preview" aria-live="polite">
+              <div class="ticket-header">
+                <span class="ticket-logo">🦐 SHRIMP TIME</span>
+                <span class="ticket-title">BILLET DE RÉSERVATION</span>
+              </div>
+              <div class="ticket-divider"></div>
+              <div class="ticket-body">
+                <div class="ticket-row">
+                  <span class="ticket-label">INVITÉS</span>
+                  <span class="ticket-value" id="ticket-val-guests">2 PERSONNES</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-label">DATE</span>
+                  <span class="ticket-value" id="ticket-val-date">-- / -- / ----</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-label">HEURE</span>
+                  <span class="ticket-value" id="ticket-val-time">-- : --</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-label">BRANCH</span>
+                  <span class="ticket-value" id="ticket-val-branch">LA MARSA</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-label">NOM</span>
+                  <span class="ticket-value" id="ticket-val-name">--</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-label">TEL</span>
+                  <span class="ticket-value" id="ticket-val-phone">--</span>
+                </div>
+              </div>
+              <div class="ticket-divider"></div>
+              <div class="ticket-footer">
+                <span class="ticket-barcode">|||| | ||||| | || |||| |</span>
+                <span class="ticket-note">VALIDATION VIA WHATSAPP</span>
+              </div>
             </div>
-          </form>
+          </div>
+
         </div>
       </div>
     </section>
@@ -313,8 +385,8 @@
       <div class="container">
         <div class="section-header">
           <span class="section-eyebrow">Avis clients</span>
-          <h2 class="section-title">Ce que nos gourmets en disent</h2>
-          <p class="section-desc">Découvrez les retours de nos clients sur la fraîcheur de nos crustacés et l'expérience en salle.</p>
+          <h2 class="section-title">La satisfaction de nos <em>gourmets</em></h2>
+          <p class="section-desc">Ce que nos clients partagent sur la fraîcheur de nos crustacés et la saveur Cajun.</p>
         </div>
 
         <div class="review-grid">
@@ -368,7 +440,7 @@
           <div class="footer-contact-info">
             <p><strong>Téléphone :</strong> <a href="tel:+21698900372">98 900 372</a></p>
             <p><strong>Email :</strong> <a href="mailto:shrimptime270@gmail.com">shrimptime270@gmail.com</a></p>
-            <p><strong>Heures d'ouverture :</strong><br>Mar–Dim · 12:00 – 23:30<br><span style="opacity: 0.65; font-size: 0.82rem;">Lundi fermé</span></p>
+            <p><strong>Heures d'ouverture :</strong><br>Mar–Dim · 12:00 – 23:30<br><span style="opacity: 0.5; font-size: 0.82rem;">Lundi fermé</span></p>
           </div>
         </div>
       </div>
