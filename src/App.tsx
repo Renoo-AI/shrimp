@@ -102,7 +102,7 @@ export default function App() {
               <h2 className="font-serif text-2xl font-black text-white tracking-widest uppercase mb-1">
                 Shrimp Time
               </h2>
-              <p className="text-[10px] text-brand-green font-arabic font-black tracking-widest mb-8">
+              <p className="text-[10px] text-brand-green font-arabic font-black tracking-widest mb-10">
                 عيش التجربة
               </p>
               
@@ -115,11 +115,6 @@ export default function App() {
                     style={{ width: `${progress}%` }}
                   />
                 </div>
-                
-                {/* Percentage */}
-                <span className="text-[10px] font-mono font-black tracking-widest text-brand-yellow mt-3 block text-center">
-                  {Math.round(progress)}%
-                </span>
               </div>
             </div>
           </motion.div>
