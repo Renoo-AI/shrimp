@@ -9,10 +9,10 @@
 .menu-page-header {
   position: relative;
   padding: calc(var(--spacing-xl) - 1.5rem) 0 calc(var(--spacing-lg) + 1rem);
-  background: linear-gradient(180deg, rgba(10, 31, 63, 0.94), rgba(18, 30, 46, 0.82)), url('/assets/images/hero-bg.jpg') center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(2, 6, 13, 0.94), rgba(6, 15, 26, 0.82)), url('/assets/images/hero-bg.jpg') center/cover no-repeat;
   color: var(--color-white);
   text-align: center;
-  border-bottom: 4px solid var(--color-yellow);
+  border-bottom: 1px solid var(--color-gold);
 }
 
 .menu-page-header .container {
