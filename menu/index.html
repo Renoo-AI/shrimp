@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- SEO Menu Metadata -->
+  <title>Menu | Shrimp Time - Notre Carte</title>
+  <meta name="description" content="Découvrez le menu frais de Shrimp Time. Crevettes, moules, crabe, langouste, frites croustillantes et sauces maison à La Marsa et L'Aouina." />
+  <meta name="theme-color" content="#0A1F3F" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shrimptime.vercel.app/menu/" />
+  <meta property="og:title" content="Menu | Shrimp Time - Notre Carte" />
+  <meta property="og:description" content="Menu Shrimp Time — Fruits de mer, fritures et boissons. Découvrez nos prix en DT." />
+  <meta property="og:image" content="https://shrimptime.vercel.app/assets/images/logo.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Menu | Shrimp Time" />
+  <meta name="twitter:description" content="Restaurant de fruits de mer à La Marsa et L'Aouina. Découvrez notre carte." />
+  <meta name="twitter:image" content="https://shrimptime.vercel.app/assets/images/logo.png" />
+
+  <!-- Icons & PWA -->
+  <link rel="icon" type="image/png" href="/assets/icons/favicon.png" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/menu/menu.css" />
+</head>
+<body>
+
+  <!-- Accessible Skip Navigation -->
+  <a href="#menu-page" class="sr-only">Accéder directement au menu</a>
+
+  <!-- Menu Header -->
+  <header class="menu-page-header">
+    <div class="container">
+      <span class="hero-eyebrow">La Carte</span>
+      <h1 class="page-title">Fruits de Mer, Fritures et Boissons</h1>
+      <p class="page-subtitle">Sélectionnez une catégorie ci-dessous pour explorer nos spécialités fraîchement préparées. Tous les prix sont exprimés en DT.</p>
+      
+      <div class="menu-header-actions">
+        <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+        <a href="/#reservation" class="btn btn-secondary">Réserver une table</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Detailed Menu Main Section -->
+  <main id="menu-page" class="menu-main-section">
+    <div class="container">
+      <!-- Dynamic Category Tabs -->
+      <div class="menu-tabs" id="menu-tabs" role="tablist" aria-label="Catégories du menu">
+        <!-- Filled dynamically by app.js -->
+      </div>
+
+      <!-- Dynamic Menu Items Grid -->
+      <div class="menu-grid" id="menu-grid">
+        <!-- Filled dynamically by app.js -->
+      </div>
+
+      <!-- Sauces Callout Card -->
+      <div class="menu-footer-note" style="background-color: var(--color-white); box-shadow: var(--shadow-sm);">
+        <span class="icon">✨</span>
+        <span>Sauces disponibles pour accompagner vos crustacés : <strong>Sauce Crème, Sauce Cajun (épicée), ou Sauce Citron & Ail</strong>.</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Simple Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; <span id="copyright-year">2026</span> Shrimp Time. Tous droits réservés.</p>
+        <p>📞 98 900 372 · ✉️ shrimptime270@gmail.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic JavaScript -->
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,51 +1,378 @@
-<!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shrimp Time | Fruits de Mer Frais – La Marsa & L'Aouina</title>
-    <meta name="description" content="Shrimp Time — Restaurant de fruits de mer à La Marsa et L'Aouina. Menu frais, réservation WhatsApp, ambiance premium. Note 4.4★ sur Google." />
-    <meta name="theme-color" content="#0A1F3F" />
-    <meta name="color-scheme" content="light dark" />
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- SEO Primary Metadata -->
+  <title>Shrimp Time | Fruits de Mer Frais – La Marsa & L'Aouina</title>
+  <meta name="description" content="Shrimp Time — Restaurant de fruits de mer à La Marsa et L'Aouina. Menu frais, réservation WhatsApp, ambiance premium. Note 4.4★ sur Google." />
+  <meta name="theme-color" content="#0A1F3F" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Shrimp Time | Fruits de Mer Frais – La Marsa & L'Aouina" />
-    <meta property="og:description" content="Restaurant de fruits de mer à Tunis. Menu frais, réservation WhatsApp, ambiance premium. 4.4★ sur Google." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://shrimptime.vercel.app/" />
-    <meta property="og:image" content="https://shrimptime.vercel.app/logo.png" />
-    <meta property="og:site_name" content="Shrimp Time" />
-    <meta property="og:locale" content="fr_FR" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shrimptime.vercel.app/" />
+  <meta property="og:title" content="Shrimp Time | Fruits de Mer Frais – La Marsa & L'Aouina" />
+  <meta property="og:description" content="Restaurant de fruits de mer à La Marsa et L'Aouina. Menu frais, réservation WhatsApp, ambiance premium. 4.4★ sur Google." />
+  <meta property="og:image" content="https://shrimptime.vercel.app/assets/images/logo.png" />
+  <meta property="og:site_name" content="Shrimp Time" />
+  <meta property="og:locale" content="fr_FR" />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Shrimp Time | Fruits de Mer Frais" />
-    <meta name="twitter:description" content="Restaurant de fruits de mer à La Marsa et L'Aouina. Réservation WhatsApp." />
-    <meta name="twitter:image" content="https://shrimptime.vercel.app/logo.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://shrimptime.vercel.app/" />
+  <meta name="twitter:title" content="Shrimp Time | Fruits de Mer Frais" />
+  <meta name="twitter:description" content="Restaurant de fruits de mer à La Marsa et L'Aouina. Réservation WhatsApp." />
+  <meta name="twitter:image" content="https://shrimptime.vercel.app/assets/images/logo.png" />
 
-    <!-- Icons -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/logo.png" />
-    <link rel="manifest" href="/manifest.json" />
+  <!-- Icons & PWA -->
+  <link rel="icon" type="image/png" href="/assets/icons/favicon.png" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
+  <link rel="apple-touch-icon" href="/assets/images/logo.png" />
+  <link rel="manifest" href="/manifest.json" />
 
-    <!-- Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://wa.me" />
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/styles.css" />
 
-    <!-- PWA -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js');
-        });
+  <!-- Structured Data JSON-LD (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Shrimp Time",
+    "description": "Restaurant de fruits de mer à La Marsa et L'Aouina. Menu frais, réservation WhatsApp.",
+    "image": "https://shrimptime.vercel.app/assets/images/logo.png",
+    "url": "https://shrimptime.vercel.app/",
+    "telephone": "+21698900372",
+    "email": "shrimptime270@gmail.com",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.4",
+      "reviewCount": "394",
+      "bestRating": "5"
+    },
+    "servesCuisine": "Seafood",
+    "priceRange": "$$",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "12:00",
+        "closes": "23:30"
       }
-    </script>
-  </head>
-  <body>
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[9999] focus:bg-yellow focus:text-navy focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold focus:no-underline">Skip to main content</a>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    ],
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "La Marsa Plage, face à Zephyr",
+        "addressLocality": "La Marsa",
+        "addressCountry": "TN"
+      },
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Sous le Centre Médical Aïcha, Cité El Wahat",
+        "addressLocality": "L'Aouina",
+        "addressCountry": "TN"
+      }
+    ],
+    "hasMenu": {
+      "@type": "Menu",
+      "name": "Notre Menu",
+      "hasMenuItem": [
+        {
+          "@type": "MenuItem",
+          "name": "Crevettes 12 Pièces",
+          "description": "12 crevettes + riz + salade",
+          "offers": { "@type": "Offer", "price": 49, "priceCurrency": "TND" }
+        },
+        {
+          "@type": "MenuItem",
+          "name": "Crevettes 6 Pièces",
+          "description": "6 crevettes + riz + salade",
+          "offers": { "@type": "Offer", "price": 29, "priceCurrency": "TND" }
+        },
+        {
+          "@type": "MenuItem",
+          "name": "Mix Fruits de Mer (2 Pers.)",
+          "description": "8 crevettes, 2 crabes, 8 moules, 250g poulpe, 250g calamar",
+          "offers": { "@type": "Offer", "price": 80, "priceCurrency": "TND" }
+        },
+        {
+          "@type": "MenuItem",
+          "name": "Langouste",
+          "description": "Langouste grillée + riz + salade",
+          "offers": { "@type": "Offer", "price": 120, "priceCurrency": "TND" }
+        }
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Accessible Skip Navigation -->
+  <a href="#main-content" class="sr-only">Accéder directement au contenu principal</a>
+
+  <!-- Header Section -->
+  <header class="site-header">
+    <div class="container site-nav">
+      <a href="/" class="brand" aria-label="Shrimp Time Accueil">
+        <span class="brand-icon">🦐</span>
+        <span>Shrimp Time</span>
+      </a>
+      
+      <nav class="nav-menu" aria-label="Navigation principale">
+        <a href="#hero" class="nav-link">Accueil</a>
+        <a href="#menu" class="nav-link">Menu</a>
+        <a href="#branches" class="nav-link">Nos adresses</a>
+        <a href="#reservation" class="nav-link">Réservation</a>
+        <a href="/menu/index.html" class="nav-cta">Consulter la carte</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Scope -->
+  <main id="main-content">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="container hero-content">
+        <div class="hero-badge">
+          <span>📍 La Marsa & L'Aouina</span>
+        </div>
+        <h1 class="hero-title">Des fruits de mer frais, servis dans une ambiance premium.</h1>
+        <p class="hero-subtitle">Shrimp Time propose un menu simple et inspiré, des réservations rapides par WhatsApp, et deux adresses incontournables à Tunis.</p>
+        
+        <div class="hero-actions">
+          <a href="#menu" class="btn btn-primary">Découvrir le menu</a>
+          <a href="#reservation" class="btn btn-secondary">Réserver une table</a>
+        </div>
+
+        <div class="hero-trust">
+          <div class="trust-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <span class="trust-text">Note 4.4★ sur 394 avis Google</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Preview Section -->
+    <section id="menu" class="section section-sand">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Aperçu de la carte</span>
+          <h2 class="section-title">Notre Menu</h2>
+          <p class="section-desc">Choisissez parmi nos fruits de mer, fritures croustillantes, accompagnements et boissons fraîches. Tous les prix sont en DT.</p>
+        </div>
+
+        <!-- Dynamic Category Toggles -->
+        <div class="menu-tabs" id="menu-tabs" role="tablist" aria-label="Catégories du menu">
+          <!-- Filled dynamically by app.js -->
+        </div>
+
+        <!-- Dynamic Items Grid -->
+        <div class="menu-grid" id="menu-grid">
+          <!-- Filled dynamically by app.js -->
+        </div>
+
+        <!-- Sauces Callout Card -->
+        <div class="menu-footer-note">
+          <span class="icon">✨</span>
+          <span>Nappage et sauces disponibles pour vos plats : <strong>Sauce Crème, Sauce Cajun (épicée), ou Sauce Citron & Ail</strong>.</span>
+        </div>
+
+        <!-- Secondary Detailed Menu CTA -->
+        <div class="menu-cta-wrap">
+          <a href="/menu/index.html" class="btn btn-primary">Parcourir le menu complet →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Branches Section -->
+    <section id="branches" class="section section-white">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Nos branches</span>
+          <h2 class="section-title">Deux restaurants à Tunis</h2>
+          <p class="section-desc">Deux adresses accueillantes, la même passion pour les saveurs marines authentiques.</p>
+        </div>
+
+        <!-- Location Cards Grid -->
+        <div class="branch-grid" id="branch-grid">
+          <!-- Filled dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="section section-sand">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Réservation</span>
+          <h2 class="section-title">Réservez votre table en direct</h2>
+          <p class="section-desc">Remplissez le formulaire en quelques clics, nous préparons votre message et vous le validez sans engagement via WhatsApp.</p>
+        </div>
+
+        <!-- Reservation Card Wrapper -->
+        <div class="reservation-card">
+          <form id="reservation-form" class="reservation-form-grid" novalidate>
+            
+            <div class="form-group">
+              <label for="branch" class="form-label">Succursale</label>
+              <select id="branch" name="branch" class="form-select" required>
+                <option value="marsa">La Marsa (Plage, face Zephyr)</option>
+                <option value="aouina">L'Aouina (Cité El Wahat)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="guests" class="form-label">Nombre d'invités</label>
+              <select id="guests" name="guests" class="form-select" required>
+                <!-- Generated 1 to 20 dynamically or hardcoded -->
+                <option value="1">1 personne</option>
+                <option value="2" selected>2 personnes</option>
+                <option value="3">3 personnes</option>
+                <option value="4">4 personnes</option>
+                <option value="5">5 personnes</option>
+                <option value="6">6 personnes</option>
+                <option value="7">7 personnes</option>
+                <option value="8">8 personnes</option>
+                <option value="9">9 personnes</option>
+                <option value="10">10 personnes</option>
+                <option value="11">11 personnes</option>
+                <option value="12">12 personnes</option>
+                <option value="13">13 personnes</option>
+                <option value="14">14 personnes</option>
+                <option value="15">15 personnes</option>
+                <option value="16">16 personnes</option>
+                <option value="17">17 personnes</option>
+                <option value="18">18 personnes</option>
+                <option value="19">19 personnes</option>
+                <option value="20">20 personnes</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="form-label">Votre Nom</label>
+              <input id="name" name="name" type="text" class="form-input" placeholder="Ex: Ahmed Ben Salem" required />
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">Numéro de téléphone</label>
+              <input id="phone" name="phone" type="tel" class="form-input" placeholder="Ex: 98 900 372" required />
+            </div>
+
+            <div class="form-group">
+              <label for="date" class="form-label">Date souhaitée</label>
+              <input id="date" name="date" type="date" class="form-input" required />
+            </div>
+
+            <div class="form-group">
+              <label for="time" class="form-label">Heure</label>
+              <select id="time" name="time" class="form-select" required>
+                <!-- Filled dynamically by app.js from allowed slots -->
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="requests" class="form-label">Demandes particulières (Facultatif)</label>
+              <textarea id="requests" name="requests" class="form-textarea" placeholder="Allergies, table près de la fenêtre, anniversaire..."></textarea>
+            </div>
+
+            <!-- Banner for Inline Form Errors / Success feedback -->
+            <div class="form-group full-width">
+              <div id="reservation-feedback" class="form-feedback-banner" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group full-width">
+              <button class="btn btn-primary reservation-submit-btn" type="submit">Réserver maintenant →</button>
+              <p class="reservation-trust-note">Sans engagement. Confirmation instantanée après redirection WhatsApp.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof (Reviews) Section -->
+    <section class="section section-white">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Avis clients</span>
+          <h2 class="section-title">Ce que nos gourmets en disent</h2>
+          <p class="section-desc">Découvrez les retours de nos clients sur la fraîcheur de nos crustacés et l'expérience en salle.</p>
+        </div>
+
+        <div class="review-grid">
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <p class="review-text">"Best shrimp in Tunisia — the boil is INSANE. Fresh, generous portions, and the cajun sauce is perfect."</p>
+            <span class="review-author">Karim, La Marsa</span>
+          </article>
+
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <p class="review-text">"Très bonne expérience ! Fruits de mer accompagnés de riz savoureux, avec des produits clairement frais."</p>
+            <span class="review-author">Sarra, Tunis</span>
+          </article>
+
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <p class="review-text">"Deuxième visite et toujours aussi bon. Quantité, variété et fraîcheur au rendez-vous."</p>
+            <span class="review-author">Mehdi, L'Aouina</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand-wrap">
+          <a href="/" class="footer-brand">
+            <span>🦐</span> Shrimp Time
+          </a>
+          <p class="footer-desc">Des fruits de mer savoureux et une préparation minute pour les amateurs de crustacés à Tunis.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Plan du site</h4>
+          <ul class="footer-links-list">
+            <li><a href="#hero">Accueil</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#branches">Nos branches</a></li>
+            <li><a href="#reservation">Réservation</a></li>
+            <li><a href="/menu/index.html">Carte détaillée</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Contact & Horaires</h4>
+          <div class="footer-contact-info">
+            <p><strong>Téléphone :</strong> <a href="tel:+21698900372">98 900 372</a></p>
+            <p><strong>Email :</strong> <a href="mailto:shrimptime270@gmail.com">shrimptime270@gmail.com</a></p>
+            <p><strong>Heures d'ouverture :</strong><br>Mar–Dim · 12:00 – 23:30<br><span style="opacity: 0.65; font-size: 0.82rem;">Lundi fermé</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="copyright-year">2026</span> Shrimp Time. Tous droits réservés.</p>
+        
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/shrimp_.time/" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Suivez-nous sur Instagram">
+            Instagram
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61559768967974" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Suivez-nous sur Facebook">
+            Facebook
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic JavaScript -->
+  <script src="/app.js"></script>
+</body>
 </html>
