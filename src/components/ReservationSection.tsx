@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { BRANCHES, TIME_SLOTS, RESERVATION_FORM_INITIAL } from '../data';
 import { motion } from 'motion/react';
-import { User, Phone, Users, Calendar, Clock, MapPin, MessageSquare, Cake, Heart, ShieldAlert, Wine, Star, Flame, Check } from 'lucide-react';
+import { User, Phone, Users, Calendar, Clock, MapPin, MessageSquare, Cake, Heart, ShieldAlert, Wine, Star, Flame, Check, Citrus } from 'lucide-react';
 
 export default function ReservationSection() {
   const [f, setF] = useState({ ...RESERVATION_FORM_INITIAL });
