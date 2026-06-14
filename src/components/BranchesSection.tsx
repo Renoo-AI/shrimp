@@ -4,76 +4,73 @@ import { motion } from 'motion/react';
 
 export default function BranchesSection() {
   return (
-    <section id="branches" className="relative py-28 md:py-36 px-8 md:px-16 lg:px-24" style={{ backgroundColor: '#F8F6F2' }}>
-      <div className="max-w-[1400px] mx-auto">
-        {/* Section header — asymmetric */}
-        <div className="mb-20 md:mb-28">
+    <section id="branches" className="section-surface relative py-32 md:py-44 px-6 md:px-12 lg:px-20 overflow-hidden">
+      {/* Subtle warm light */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] pointer-events-none"
+        style={{ background: 'radial-gradient(circle at top right, rgba(245,211,0,0.06), transparent 70%)' }}
+      />
+
+      <div className="max-w-[1200px] mx-auto relative z-10">
+        
+        {/* Section header — gallery-label minimal */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.15 }}
+          className="mb-24 md:mb-32"
+        >
           <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="font-sans text-[10px] uppercase tracking-[0.3em] text-muted-light mb-4 font-semibold"
+            variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
+            transition={{ duration: 0.8 }}
+            className="label-xs text-muted mb-4"
           >
             Tunis, Tunisie
           </motion.p>
           <motion.h2
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-serif text-5xl md:text-7xl font-black text-ink tracking-tight"
+            variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
+            transition={{ duration: 0.8 }}
+            className="display-lg text-5xl md:text-7xl text-navy"
           >
             Nos Branches
           </motion.h2>
           <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.25 }}
-            className="accent-line mt-8"
-            style={{ transformOrigin: 'left' }}
+            variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
+            transition={{ duration: 0.8 }}
+            className="gold-line mt-8"
           />
-        </div>
+        </motion.div>
 
-        {/* Branch cards — asymmetric grid, not equal */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.8fr] gap-1">
+        {/* Branches — two pillars of text, generously spaced */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 md:gap-32">
           {BRANCHES.map((branch, i) => (
             <motion.div
               key={branch.id}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.8, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative p-10 md:p-14 transition-colors duration-500 hover:bg-amber/[0.03]"
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 1, delay: i * 0.25, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Thin top line */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-ink/[0.08]" />
-
-              <span className="font-serif text-7xl md:text-8xl font-black text-ink/[0.06] leading-none select-none">
+              {/* Large number */}
+              <p className="display-xl text-[80px] md:text-[100px] text-navy/[0.04] leading-none select-none mb-6">
                 {String(i + 1).padStart(2, '0')}
-              </span>
+              </p>
+              
+              <h3 className="display-lg text-2xl md:text-3xl text-navy">
+                {branch.name}
+              </h3>
+              
+              <p className="body-text text-muted mt-4 leading-relaxed max-w-[360px]">
+                {branch.address}
+              </p>
 
-              <div className="mt-6 md:mt-8">
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-ink tracking-tight">
-                  {branch.name}
-                </h3>
-                <p className="font-sans text-sm text-muted-light mt-3 leading-relaxed max-w-[320px]">
-                  {branch.address}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-6 mt-8">
-                <a
-                  href={`tel:${branch.phone}`}
-                  className="font-sans text-sm font-semibold text-ink hover:text-amber transition-colors duration-200 tracking-tight"
-                >
+              <div className="flex items-center gap-8 mt-10">
+                <a href={`tel:${branch.phone}`}
+                  className="display-italic text-xl text-navy hover:text-yellow transition-colors duration-300">
                   {branch.phoneDisplay}
                 </a>
-                <a
-                  href={`tel:${branch.phone}`}
-                  className="font-sans text-[11px] uppercase tracking-[0.2em] text-muted-light hover:text-ink transition-colors duration-200 font-semibold"
-                >
+                <a href={`tel:${branch.phone}`}
+                  className="label-xs text-muted hover:text-navy transition-colors duration-300">
                   Appeler →
                 </a>
               </div>

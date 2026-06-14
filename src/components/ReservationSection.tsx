@@ -13,219 +13,179 @@ export default function ReservationSection() {
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: '' }));
   };
 
-  const validateTunisianPhone = (phone: string): boolean => {
-    const cleaned = phone.replace(/[\s\-()]+/g, '');
-    if (/^\+216/.test(cleaned)) return /^\+216[2-9]\d{7}$/.test(cleaned);
-    if (/^216/.test(cleaned)) return /^216[2-9]\d{7}$/.test(cleaned);
-    if (/^0/.test(cleaned)) return /^0[2-9]\d{7}$/.test(cleaned);
-    return /^[2-9]\d{7}$/.test(cleaned);
+  const validatePhone = (p: string) => {
+    const c = p.replace(/[\s\-()]+/g, '');
+    if (/^\+216/.test(c)) return /^\+216[2-9]\d{7}$/.test(c);
+    if (/^216/.test(c)) return /^216[2-9]\d{7}$/.test(c);
+    if (/^0/.test(c)) return /^0[2-9]\d{7}$/.test(c);
+    return /^[2-9]\d{7}$/.test(c);
   };
 
-  const buildWhatsAppMessage = (): string => {
-    const branch = BRANCHES.find((b) => b.id === form.branch);
-    const branchName = branch ? branch.name : form.branch;
-    const dateParts = form.date.split('-');
-    const dateFormatted = `${dateParts[2] || ''}/${dateParts[1] || ''}/${dateParts[0] || ''}`;
-    return `Bonjour Shrimp Time, R\u00e9servation pour ${form.guests} personnes le ${dateFormatted} \u00e0 ${form.time} \u00e0 la branche ${branchName} Tel: ${form.phone}`;
+  const buildMsg = () => {
+    const b = BRANCHES.find((x) => x.id === form.branch);
+    const dp = form.date.split('-');
+    const df = `${dp[2] || ''}/${dp[1] || ''}/${dp[0] || ''}`;
+    return `Bonjour Shrimp Time, Réservation pour ${form.guests} personnes le ${df} à ${form.time} à la branche ${b?.name || form.branch} Tel: ${form.phone}`;
   };
 
-  const launchConfetti = () => {
+  const confetti = () => {
     if (!confettiRef.current) return;
-    const container = confettiRef.current;
-    const emojis = ['🦐', '✨', '🦞', '🦑', '🍋'];
-    for (let i = 0; i < 50; i++) {
-      const particle = document.createElement('span');
-      particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      particle.style.cssText = `
-        position: absolute; left: ${Math.random() * 100}%; top: 0;
-        font-size: ${Math.random() * 20 + 14}px;
-        animation: confetti-fall ${Math.random() * 2 + 1.5}s ease-out forwards;
-        animation-delay: ${Math.random() * 0.5}s;
-        pointer-events: none;
+    const c = confettiRef.current;
+    const e = ['🦐', '✨', '🦞', '🦑', '🍋'];
+    for (let i = 0; i < 45; i++) {
+      const p = document.createElement('span');
+      p.textContent = e[Math.floor(Math.random() * e.length)];
+      p.style.cssText = `
+        position:absolute;left:${Math.random() * 100}%;top:0;
+        font-size:${Math.random() * 20 + 14}px;
+        animation:confetti-fall ${Math.random() * 2 + 1.5}s ease-out forwards;
+        animation-delay:${Math.random() * 0.5}s;pointer-events:none;
       `;
-      container.appendChild(particle);
-      setTimeout(() => particle.remove(), 2500);
+      c.appendChild(p);
+      setTimeout(() => p.remove(), 2500);
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
-
     if (!form.branch) errs.branch = 'Choisissez une branche';
-    if (!form.phone.trim()) {
-      errs.phone = 'Numéro requis';
-    } else if (!validateTunisianPhone(form.phone)) {
-      errs.phone = 'Numéro tunisien invalide';
-    }
+    if (!form.phone.trim()) errs.phone = 'Numéro requis';
+    else if (!validatePhone(form.phone)) errs.phone = 'Numéro tunisien invalide';
     if (form.guests < 1 || form.guests > 20) errs.guests = '1–20 personnes';
     if (!form.date) errs.date = 'Date requise';
     if (!form.time) errs.time = 'Heure requise';
-
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      return;
-    }
+    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
     const branch = BRANCHES.find((b) => b.id === form.branch);
     const phone = branch ? branch.phone.replace('+', '') : '21698900372';
-    const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(buildWhatsAppMessage())}`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildMsg())}`, '_blank');
 
     setSuccess(true);
-    launchConfetti();
+    confetti();
     setForm({ ...RESERVATION_FORM_INITIAL });
-
-    setTimeout(() => window.open(waUrl, '_blank'), 600);
     setTimeout(() => setSuccess(false), 3000);
   };
 
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <section id="reservation" className="relative py-28 md:py-36 px-8 md:px-16 lg:px-24 noise-section" style={{ backgroundColor: '#080B14' }}>
-      <div ref={confettiRef} className="absolute inset-0 pointer-events-none overflow-hidden z-10" />
+    <section id="reservation" className="section-shore relative py-32 md:py-44 px-6 md:px-12 lg:px-20 overflow-hidden">
+      
+      {/* Ethereal light — the shore at twilight */}
+      <div className="absolute top-1/3 left-1/3 w-[700px] h-[700px] pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(245,211,0,0.05) 0%, rgba(10,31,63,0) 60%)' }}
+      />
+      <div ref={confettiRef} className="absolute inset-0 pointer-events-none overflow-hidden z-20" />
 
-      <div className="max-w-[1400px] mx-auto relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24">
+      <div className="max-w-[1200px] mx-auto relative z-10">
+        
+        {/* Header */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.15 }}
+          className="mb-20 md:mb-28"
+        >
+          <motion.p
+            variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
+            transition={{ duration: 0.8 }}
+            className="label-xs text-white/30 mb-4"
+          >
+            Sans appel, sans attente
+          </motion.p>
+          <motion.h2
+            variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
+            transition={{ duration: 0.8 }}
+            className="display-lg text-5xl md:text-7xl text-white"
+          >
+            Réserver<br />une Table
+          </motion.h2>
+          <motion.div
+            variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
+            transition={{ duration: 0.8 }}
+            className="gold-line mt-8"
+          />
+        </motion.div>
+
+        {/* Form — split layout, form on right, context on left */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-28">
           
-          {/* Left — Heading + context */}
-          <div>
-            <motion.p
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="font-sans text-[10px] uppercase tracking-[0.3em] text-muted-dark mb-4 font-semibold"
-            >
-              Service de Conciergerie
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-serif text-5xl md:text-7xl font-black text-parchment tracking-tight"
-            >
-              Réserver une Table
-            </motion.h2>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="accent-line mt-8"
-              style={{ transformOrigin: 'left' }}
-            />
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="font-sans text-sm text-muted-dark mt-8 leading-relaxed max-w-[300px]"
-            >
-              Réservez en ligne, sans appel. Confirmation immédiate via WhatsApp.
-            </motion.p>
-          </div>
+          {/* Left — poetic context */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="hidden lg:flex flex-col justify-end pb-4"
+          >
+            <p className="display-italic text-2xl text-white/15 leading-relaxed">
+              Chaque table<br />
+              est une promesse<br />
+              de fraîcheur.
+            </p>
+            <p className="label-xs text-white/15 mt-8">
+              Confirmation immédiate via WhatsApp
+            </p>
+          </motion.div>
 
-          {/* Right — Brutalist form */}
+          {/* Right — the form itself */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-              {/* Branch */}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+              
               <div>
-                <label className="block font-sans text-[10px] uppercase tracking-[0.2em] text-muted-dark mb-3 font-semibold">
-                  Branche
-                </label>
-                <select
-                  value={form.branch}
-                  onChange={(e) => set('branch', e.target.value)}
-                  className="brutal-select"
-                >
-                  <option value="">-- Sélectionnez --</option>
+                <label className="label-xs text-white/30 mb-3 block">Branche</label>
+                <select value={form.branch} onChange={(e) => set('branch', e.target.value)} className="etch-select">
+                  <option value="">— Sélectionnez —</option>
                   {BRANCHES.map((b) => (
                     <option key={b.id} value={b.id}>{b.name}</option>
                   ))}
                 </select>
-                {errors.branch && <p className="font-sans text-xs text-error mt-2">{errors.branch}</p>}
+                {errors.branch && <p className="text-xs text-error mt-2 font-sans">{errors.branch}</p>}
               </div>
 
-              {/* Phone */}
               <div>
-                <label className="block font-sans text-[10px] uppercase tracking-[0.2em] text-muted-dark mb-3 font-semibold">
-                  Téléphone
-                </label>
-                <input
-                  type="tel"
-                  value={form.phone}
-                  onChange={(e) => set('phone', e.target.value)}
-                  placeholder="98 900 372"
-                  className="brutal-input"
-                />
-                {errors.phone && <p className="font-sans text-xs text-error mt-2">{errors.phone}</p>}
+                <label className="label-xs text-white/30 mb-3 block">Téléphone</label>
+                <input type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="98 900 372" className="etch-input" />
+                {errors.phone && <p className="text-xs text-error mt-2 font-sans">{errors.phone}</p>}
               </div>
 
-              {/* Guests + Date row */}
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-2 gap-10">
                 <div>
-                  <label className="block font-sans text-[10px] uppercase tracking-[0.2em] text-muted-dark mb-3 font-semibold">
-                    Personnes
-                  </label>
-                  <select
-                    value={form.guests}
-                    onChange={(e) => set('guests', parseInt(e.target.value))}
-                    className="brutal-select"
-                  >
+                  <label className="label-xs text-white/30 mb-3 block">Personnes</label>
+                  <select value={form.guests} onChange={(e) => set('guests', parseInt(e.target.value))} className="etch-select">
                     {Array.from({ length: 20 }, (_, i) => i + 1).map((n) => (
                       <option key={n} value={n}>{n}</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block font-sans text-[10px] uppercase tracking-[0.2em] text-muted-dark mb-3 font-semibold">
-                    Date
-                  </label>
-                  <input
-                    type="date"
-                    value={form.date}
-                    min={today}
-                    onChange={(e) => set('date', e.target.value)}
-                    className="brutal-input"
-                  />
-                  {errors.date && <p className="font-sans text-xs text-error mt-2">{errors.date}</p>}
+                  <label className="label-xs text-white/30 mb-3 block">Date</label>
+                  <input type="date" value={form.date} min={today} onChange={(e) => set('date', e.target.value)} className="etch-input" />
+                  {errors.date && <p className="text-xs text-error mt-2 font-sans">{errors.date}</p>}
                 </div>
               </div>
 
-              {/* Time */}
               <div>
-                <label className="block font-sans text-[10px] uppercase tracking-[0.2em] text-muted-dark mb-3 font-semibold">
-                  Heure
-                </label>
-                <select
-                  value={form.time}
-                  onChange={(e) => set('time', e.target.value)}
-                  className="brutal-select"
-                >
-                  {TIME_SLOTS.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
+                <label className="label-xs text-white/30 mb-3 block">Heure</label>
+                <select value={form.time} onChange={(e) => set('time', e.target.value)} className="etch-select">
+                  {TIME_SLOTS.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
 
-              {/* Submit */}
-              <button type="submit" className="btn-primary w-full mt-4">
+              <button type="submit" className="btn-primary w-full mt-6">
                 Réserver maintenant →
               </button>
 
               {success && (
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="font-sans text-xs text-olive text-center"
-                >
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  className="text-xs text-olive/80 text-center font-sans tracking-wide">
                   Réservation envoyée. Ouverture de WhatsApp...
                 </motion.p>
               )}

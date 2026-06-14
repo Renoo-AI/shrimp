@@ -6,152 +6,161 @@ import ReservationSection from './components/ReservationSection';
 import { INSTAGRAM_URL, BRANCHES } from './data';
 import { motion } from 'motion/react';
 
+const scrollTo = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+};
+
 export default function App() {
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <div className="min-h-screen font-sans text-parchment antialiased relative" style={{ backgroundColor: '#080B14' }}>
-      {/* ── Global Noise Overlay ── */}
-      <div className="noise-overlay" />
-
+    <main className="min-h-screen font-sans antialiased" style={{ background: '#0A1F3F' }}>
       <Navbar />
 
-      {/* ═══════════════ HERO ═══════════════ */}
-      <section
-        id="hero"
-        className="relative min-h-screen flex items-center overflow-hidden noise-section"
-        style={{ backgroundColor: '#080B14' }}
-      >
-        {/* Ambient glow — single amber light source */}
-        <div className="absolute top-[15%] right-[10%] w-[600px] h-[600px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(245,211,0,0.06) 0%, transparent 70%)' }}
-        />
-
-        {/* Hero bg image — very subtle */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.06]"
+      {/* ═══════════════════ HERO — Deep Sea ═══════════════════ */}
+      <section id="hero" className="section-deep relative min-h-screen flex items-center justify-center overflow-hidden">
+        
+        {/* Subtle hero image — barely visible, like looking into deep water */}
+        <div className="absolute inset-0 z-0 opacity-[0.06]"
           style={{
             backgroundImage: "url('/hero-bg.jpg')",
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         />
+        
+        {/* Large ambient light pool — a single source of warmth in the depths */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, rgba(245,211,0,0.07) 0%, rgba(245,211,0,0.02) 35%, transparent 70%)',
+          }}
+        />
 
-        {/* Left column — Logo + tagline */}
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-16 lg:gap-0 pt-32 pb-16">
+        {/* Second smaller light — off-center, creating depth */}
+        <div className="absolute top-[30%] right-[15%] w-[400px] h-[400px] pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, rgba(245,211,0,0.04) 0%, transparent 60%)',
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl w-full">
           
-          {/* Logo block — offset, not centered */}
+          {/* Logo — centered, floating, with breathing room */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-start"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-16"
           >
             <img
               src="/logo.png"
               alt="Shrimp Time"
-              className="w-[220px] md:w-[280px] h-auto mb-10"
+              className="w-[220px] md:w-[300px] h-auto mx-auto"
             />
-            <div className="accent-line mb-6" style={{ transformOrigin: 'left' }} />
-            <p className="font-sans text-[11px] md:text-xs uppercase tracking-[0.25em] text-muted-dark font-medium">
-              Vivez l'expérience
-            </p>
-            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-olive/70 mt-2 font-medium">
-              عيش التجربة
-            </p>
           </motion.div>
 
-          {/* Right column — Giant title + buttons */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-end text-right"
+          {/* Title — massive, but quiet. Not shouting. */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 0.85, y: 0 }}
+            transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="display-xl text-[10vw] md:text-[120px] text-white tracking-tighter leading-[0.85]"
           >
-            <h1 className="font-serif text-[14vw] md:text-[10vw] lg:text-[120px] font-black leading-[0.85] tracking-tight text-parchment">
-              SHRIMP<br />TIME
-            </h1>
-            <p className="font-sans text-sm md:text-base text-muted-dark mt-6 max-w-[380px] leading-relaxed font-medium">
-              Fruits de mer frais, ambiance premium.<br />
-              Deux branches à Tunis.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 mt-10">
-              <button onClick={() => scrollTo('menu')} className="btn-primary">
-                Voir le Menu
-              </button>
-              <button onClick={() => scrollTo('reservation')} className="btn-ghost">
-                Réserver
-              </button>
-            </div>
+            SHRIMP<br />TIME
+          </motion.h1>
+
+          {/* Tagline — whispered */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.5 }}
+            transition={{ duration: 1.5, delay: 0.8 }}
+            className="label-xs text-white/50 mt-8"
+          >
+            Vivez l'expérience
+          </motion.p>
+          
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.35 }}
+            transition={{ duration: 1.5, delay: 1.0 }}
+            className="text-[11px] text-olive/60 uppercase tracking-[0.25em] font-sans font-semibold mt-2"
+          >
+            عيش التجربة
+          </motion.p>
+
+          {/* Gold line — the first pierce of light */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.2, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="gold-line mt-10"
+          />
+
+          {/* Buttons — generous spacing, like objects on a vast table */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row gap-4 mt-16"
+          >
+            <button onClick={() => scrollTo('menu')} className="btn-primary">
+              Voir le Menu
+            </button>
+            <button onClick={() => scrollTo('reservation')} className="btn-ghost">
+              Réserver
+            </button>
           </motion.div>
         </div>
 
-        {/* Bottom decorative line */}
-        <div className="absolute bottom-0 left-8 md:left-16 lg:left-24 right-8 md:right-16 lg:right-24 h-px bg-white/[0.04]" />
+        {/* Subtle bottom fade — the sea getting deeper */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+          style={{ background: 'linear-gradient(to top, rgba(10,31,63,0.6), transparent)' }}
+        />
       </section>
 
-      {/* ═══════════════ BRANCHES ═══════════════ */}
+      {/* ═══════════════════ BRANCHES — Surface ═══════════════════ */}
       <BranchesSection />
 
-      {/* ═══════════════ MENU ═══════════════ */}
+      {/* ═══════════════════ MENU — The Depths ═══════════════════ */}
       <MenuSection />
 
-      {/* ═══════════════ RESERVATION ═══════════════ */}
+      {/* ═══════════════════ RESERVATION — The Shore ═══════════════════ */}
       <ReservationSection />
 
-      {/* ═══════════════ FOOTER ═══════════════ */}
-      <footer className="relative py-24 px-8 md:px-16 lg:px-24 noise-section" style={{ backgroundColor: '#080B14' }}>
-        <div className="max-w-[1400px] mx-auto">
-          <div className="h-px bg-white/[0.06] mb-16" />
-          
-          <div className="flex flex-col lg:flex-row justify-between items-start gap-12">
+      {/* ═══════════════════ FOOTER — The Abyss ═══════════════════ */}
+      <footer className="section-abyss relative py-24 px-6 md:px-16 lg:px-24 overflow-hidden">
+        {/* Deepest ambient light */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at top, rgba(245,211,0,0.04) 0%, transparent 70%)' }}
+        />
+
+        <div className="max-w-[1200px] mx-auto relative z-10">
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-16">
+            
             {/* Left */}
-            <div className="flex flex-col gap-6">
-              <img src="/logo.png" alt="Shrimp Time" className="h-10 w-auto opacity-70" />
-              <div>
-                <p className="font-sans text-xs uppercase tracking-[0.2em] text-muted-dark font-semibold mb-3">
-                  Nos Branches
+            <div>
+              <img src="/logo.png" alt="Shrimp Time" className="h-8 w-auto opacity-40 mb-8" />
+              {BRANCHES.map((b) => (
+                <p key={b.id} className="display-italic text-lg text-white/35 mb-1">
+                  {b.name}
                 </p>
-                {BRANCHES.map((b) => (
-                  <p key={b.id} className="font-serif text-lg text-parchment/60 leading-relaxed">
-                    {b.name}<br />
-                    <span className="font-sans text-xs text-muted-dark">{b.address}</span>
-                  </p>
-                ))}
-              </div>
+              ))}
+              <p className="label-xs text-white/20 mt-4">{BRANCHES[0].phoneDisplay}</p>
             </div>
 
             {/* Right */}
-            <div className="flex flex-col gap-6 items-start lg:items-end text-left lg:text-right">
-              <div>
-                <p className="font-sans text-xs uppercase tracking-[0.2em] text-muted-dark font-semibold mb-3">
-                  Contact
-                </p>
-                <p className="font-serif text-xl text-parchment/80">
-                  {BRANCHES[0].phoneDisplay}
-                </p>
-              </div>
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-sans text-xs uppercase tracking-[0.2em] text-muted-dark hover:text-amber transition-colors duration-300"
-              >
+            <div className="flex flex-col items-start lg:items-end gap-6 text-left lg:text-right">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
+                className="label-xs text-white/25 hover:text-yellow transition-colors duration-500">
                 @shrimp_.time
               </a>
+              <p className="text-[10px] text-white/15 font-sans uppercase tracking-[0.2em]">
+                &copy; {new Date().getFullYear()} Shrimp Time
+              </p>
             </div>
           </div>
-
-          <div className="h-px bg-white/[0.04] my-10" />
-
-          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-muted-dark/50">
-            &copy; {new Date().getFullYear()} Shrimp Time. Tous droits réservés.
-          </p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }
