@@ -1,340 +1,329 @@
-import React, { useState } from 'react';
-import { BRANCHES } from '../data';
-import { ReservationState } from '../types';
-import { MessageSquare, Phone, Calendar, User, Users, Clock, AlignLeft, ShieldCheck, MapPin } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { BRANCHES, TIME_SLOTS, RESERVATION_FORM_INITIAL } from '../data';
 import { motion } from 'motion/react';
 
 export default function ReservationSection() {
-  const [formData, setFormData] = useState<ReservationState>({
-    branchId: 'marsa_zephyr',
-    guestCount: 2,
-    date: '',
-    time: '20:00',
-    customerName: '',
-    customerPhone: '',
-    specialRequests: ''
-  });
+  const [form, setForm] = useState({ ...RESERVATION_FORM_INITIAL });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [success, setSuccess] = useState(false);
+  const confettiRef = useRef<HTMLDivElement>(null);
 
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [bookingChoice, setBookingChoice] = useState<'whatsapp' | 'call'>('whatsapp');
+  const set = (key: string, value: string | number) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: '' }));
+  };
 
-  const selectedBranchObj = BRANCHES.find(b => b.id === formData.branchId) || BRANCHES[0];
+  const validateTunisianPhone = (phone: string): boolean => {
+    const cleaned = phone.replace(/[\s\-()]+/g, '');
+    if (/^\+216/.test(cleaned)) return /^\+216[2-9]\d{7}$/.test(cleaned);
+    if (/^216/.test(cleaned)) return /^216[2-9]\d{7}$/.test(cleaned);
+    if (/^0/.test(cleaned)) return /^0[2-9]\d{7}$/.test(cleaned);
+    return /^[2-9]\d{7}$/.test(cleaned);
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    // Clear errors when typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+  const buildWhatsAppMessage = (): string => {
+    const branch = BRANCHES.find((b) => b.id === form.branch);
+    const branchName = branch ? branch.name : form.branch;
+    const dateParts = form.date.split('-');
+    const dateFormatted = `${dateParts[2] || ''}/${dateParts[1] || ''}/${dateParts[0] || ''}`;
+    return `Bonjour Shrimp Time, Réservation pour ${form.guests} personnes le ${dateFormatted} à ${form.time} à la branche ${branchName} Tel: ${form.phone}`;
+  };
+
+  const launchConfetti = () => {
+    if (!confettiRef.current) return;
+    const container = confettiRef.current;
+    const colors = ['#F5D300', '#0A1F3F', '#8B9A3D', '#FFFFFF'];
+    for (let i = 0; i < 60; i++) {
+      const particle = document.createElement('span');
+      particle.textContent = ['🦐', '✨', '🦞', '🦑', '🍋'][Math.floor(Math.random() * 5)];
+      particle.style.cssText = `
+        position: absolute;
+        left: ${Math.random() * 100}%;
+        top: 0;
+        font-size: ${Math.random() * 20 + 14}px;
+        animation: confetti-fall ${Math.random() * 2 + 1.5}s ease-out forwards;
+        animation-delay: ${Math.random() * 0.5}s;
+        pointer-events: none;
+      `;
+      container.appendChild(particle);
+      setTimeout(() => particle.remove(), 2500);
     }
   };
 
-  const handleGuestCountChange = (count: number) => {
-    setFormData(prev => ({ ...prev, guestCount: count }));
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs: Record<string, string> = {};
+
+    if (!form.branch) errs.branch = 'Veuillez choisir une branche';
+    if (!form.phone.trim()) {
+      errs.phone = 'Numéro de téléphone requis';
+    } else if (!validateTunisianPhone(form.phone)) {
+      errs.phone = 'Numéro tunisien invalide (8 chiffres)';
+    }
+    if (form.guests < 1 || form.guests > 20) errs.guests = '1 à 20 personnes';
+    if (!form.date) errs.date = 'Date requise';
+    if (!form.time) errs.time = 'Heure requise';
+
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
+    }
+
+    const branch = BRANCHES.find((b) => b.id === form.branch);
+    const phone = branch ? branch.phone.replace('+', '') : '21698900372';
+    const message = buildWhatsAppMessage();
+    const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    setSuccess(true);
+    launchConfetti();
+    setForm({ ...RESERVATION_FORM_INITIAL });
+
+    setTimeout(() => {
+      window.open(waUrl, '_blank');
+    }, 600);
+
+    setTimeout(() => setSuccess(false), 3000);
   };
 
-  const validateForm = (): boolean => {
-    const newErrors: { [key: string]: string } = {};
-    if (!formData.customerName.trim()) {
-      newErrors.customerName = 'Votre nom est requis pour la réservation.';
-    }
-    if (!formData.customerPhone.trim()) {
-      newErrors.customerPhone = 'Un numéro de téléphone de contact est obligatoire.';
-    } else if (!/^[0-9+ ]{8,15}$/.test(formData.customerPhone.replace(/\s/g, ''))) {
-      newErrors.customerPhone = 'Format de téléphone invalide (8 chiffres minimum en Tunisie).';
-    }
-    if (!formData.date) {
-      newErrors.date = 'Veuillez choisir une date pour votre table.';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const executeReservation = (type: 'whatsapp' | 'call') => {
-    if (!validateForm()) return;
-
-    const branchName = selectedBranchObj.name;
-    const dateFormatted = formData.date.split('-').reverse().join('/');
-    
-    if (type === 'whatsapp') {
-      const message = `Bonjour Shrimp Time, je souhaite réserver une table pour ce qui suit :
-• Établissement: ${branchName}
-• Nombre d'invités: ${formData.guestCount} personnes
-• Date: ${dateFormatted}
-• Heure: ${formData.time}
-• Nom client: ${formData.customerName}
-• Téléphone: ${formData.customerPhone}
-${formData.specialRequests ? `• Demandes spéciales/Plats: ${formData.specialRequests}` : ''}
-Merci de me confirmer la disponibilité !`;
-
-      const encodedMsg = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/${selectedBranchObj.phone.replace('+', '')}?text=${encodedMsg}`;
-      window.open(whatsappUrl, '_blank');
-    } else {
-      window.location.href = `tel:${selectedBranchObj.phone}`;
-    }
-  };
+  const today = new Date().toISOString().split('T')[0];
 
   return (
-    <section id="reservation" className="py-16 md:py-24 px-4 premium-gradient-bg relative">
-      {/* Decorative ambient background light */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-yellow/10 rounded-full blur-[150px] pointer-events-none" />
+    <section id="reservation" className="py-20 md:py-[100px] px-5 md:px-10 relative" style={{ backgroundColor: '#FFFFFF' }}>
+      {/* Confetti container */}
+      <div ref={confettiRef} className="absolute inset-0 pointer-events-none overflow-hidden z-10" />
 
-      <div className="max-w-4xl mx-auto relative z-10" id="booking-container">
-        
-        {/* Section Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <span className="text-brand-yellow uppercase text-xs sm:text-sm tracking-widest font-extrabold block mb-2 font-mono drop-shadow-md">
-            Service de Conciergerie
-          </span>
-          <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white tracking-tight uppercase drop-shadow-lg">
+      <div className="max-w-[500px] mx-auto relative z-20">
+        {/* Heading */}
+        <div className="text-center mb-10">
+          <h2 className="font-serif text-[36px] md:text-[48px] font-bold text-brand-navy">
             Réserver une Table
           </h2>
-          <p className="text-white/80 text-xs sm:text-sm md:text-base max-w-xl mx-auto mt-4 px-4 font-sans font-semibold leading-relaxed">
-            Planifiez votre escale gourmande. Votre demande sera instantanément reliée à notre équipe de service pour validation directe.
-          </p>
-          <div className="w-16 h-[1.5px] premium-gold-gradient mx-auto mt-6" />
-        </motion.div>
+          <div
+            className="mx-auto mt-2 mb-4"
+            style={{ width: '60px', height: '3px', backgroundColor: '#F5D300' }}
+          />
+          <p className="text-base text-brand-muted">Réservez en ligne, sans appel</p>
+        </div>
 
-        {/* Interactive Booking Panel - Premium Dark Theme, Gold Border */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="rounded-[12px] p-6 md:p-10 bg-brand-navy/60 backdrop-blur-md border border-brand-yellow/35 shadow-2xl text-white"
+        {/* Form Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+          className="p-8 rounded-xl"
+          style={{
+            backgroundColor: '#FFFFFF',
+            borderRadius: '12px',
+            border: '1px solid rgba(245,211,0,0.2)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+          }}
         >
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            
-            {/* Left Options Form Column */}
-            <div className="flex flex-col gap-6">
-              
-              {/* Branch Selector */}
-              <div className="flex flex-col">
-                <label className="text-xs uppercase tracking-wider text-white font-black mb-2 flex items-center gap-1.5">
-                  <MapPin size={14} className="text-brand-yellow" />
-                  <span>1. Établissement</span>
-                </label>
-                <select
-                  name="branchId"
-                  id="branch-selector"
-                  value={formData.branchId}
-                  onChange={handleInputChange}
-                  className="w-full bg-white/5 rounded-[8px] px-4 py-3 border border-white/10 text-white text-sm font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow/20 transition-all duration-300 cursor-pointer"
-                >
-                  {BRANCHES.map(branch => (
-                    <option key={branch.id} value={branch.id} className="bg-brand-navy text-white">{branch.name}</option>
-                  ))}
-                </select>
-                <p className="text-[11px] text-white/60 mt-1.5 leading-relaxed font-semibold">
-                  Numéro de liaison directe : <span className="text-brand-yellow font-bold">{selectedBranchObj.phoneDisplay}</span>
-                </p>
-              </div>
-
-              {/* Guest Count Segmented Buttons */}
-              <div className="flex flex-col">
-                <label className="text-xs uppercase tracking-wider text-white font-black mb-2 flex items-center gap-1.5">
-                  <Users size={14} className="text-brand-yellow" />
-                  <span>2. Nombre d'Invités</span>
-                </label>
-                <div className="grid grid-cols-6 gap-2">
-                  {[1, 2, 3, 4, 5, 6].map(num => (
-                    <button
-                      key={num}
-                      type="button"
-                      onClick={() => handleGuestCountChange(num)}
-                      className={`py-3 rounded-[8px] text-sm font-bold transition-all cursor-pointer ${
-                        formData.guestCount === num
-                          ? 'bg-brand-yellow text-brand-navy scale-105 shadow-md shadow-brand-yellow/15 font-black border border-brand-yellow'
-                          : 'bg-white/5 text-white/80 hover:bg-white/10 border border-white/10'
-                      }`}
-                    >
-                      {num === 6 ? '6+' : num}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Date & Time Row */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col">
-                  <label className="text-xs uppercase tracking-wider text-white font-black mb-2 flex items-center gap-1.5">
-                    <Calendar size={14} className="text-brand-yellow" />
-                    <span>3. Date</span>
-                  </label>
-                  <input
-                    type="date"
-                    name="date"
-                    id="date-input"
-                    value={formData.date}
-                    onChange={handleInputChange}
-                    className="bg-white/5 rounded-[8px] px-4 py-3 border border-white/10 text-white text-xs md:text-sm font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow/20 transition-all duration-300 cursor-pointer"
-                  />
-                  {errors.date && (
-                    <p className="text-[10px] text-red-400 mt-1 font-bold">{errors.date}</p>
-                  )}
-                </div>
-
-                <div className="flex flex-col">
-                  <label className="text-xs uppercase tracking-wider text-white font-black mb-2 flex items-center gap-1.5">
-                    <Clock size={14} className="text-brand-yellow" />
-                    <span>4. Heure</span>
-                  </label>
-                  <select
-                    name="time"
-                    value={formData.time}
-                    onChange={handleInputChange}
-                    className="w-full bg-white/5 rounded-[8px] px-4 py-3 border border-white/10 text-white text-xs md:text-sm font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow/20 transition-all duration-300 cursor-pointer"
-                  >
-                    {['12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30'].map(t => (
-                      <option key={t} value={t} className="bg-brand-navy text-white">{t}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+            {/* Branch */}
+            <div>
+              <label className="block text-sm font-semibold text-brand-navy mb-2">
+                Choisissez votre branche *
+              </label>
+              <select
+                value={form.branch}
+                onChange={(e) => set('branch', e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border font-sans text-sm text-brand-navy bg-white cursor-pointer transition-all duration-200 focus:outline-none"
+                style={{
+                  borderRadius: '8px',
+                  border: errors.branch ? '1px solid #DC2626' : '1px solid #D1D5DB',
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#F5D300';
+                  e.target.style.outline = '2px solid rgba(245,211,0,0.3)';
+                  e.target.style.outlineOffset = '0';
+                }}
+                onBlur={(e) => {
+                  e.target.style.outline = 'none';
+                  if (!errors.branch) e.target.style.borderColor = '#D1D5DB';
+                }}
+              >
+                <option value="">-- Sélectionnez --</option>
+                {BRANCHES.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name} – {b.phoneDisplay}
+                  </option>
+                ))}
+              </select>
+              {errors.branch && (
+                <p className="text-xs mt-1 font-medium" style={{ color: '#DC2626' }}>{errors.branch}</p>
+              )}
             </div>
 
-            {/* Right Contact Form Column */}
-            <div className="flex flex-col gap-6">
-              
-              {/* Customer Name */}
-              <div className="flex flex-col">
-                <label className="text-xs uppercase tracking-wider text-white font-black mb-2 flex items-center gap-1.5">
-                  <User size={14} className="text-brand-yellow" />
-                  <span>5. Votre Nom Complet</span>
-                </label>
-                <input
-                  type="text"
-                  name="customerName"
-                  placeholder="Ex: Mohamed Ben Ali"
-                  value={formData.customerName}
-                  onChange={handleInputChange}
-                  className="bg-white/5 rounded-[8px] px-4 py-3 border border-white/10 text-white text-sm placeholder-white/30 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow/20 transition-all duration-300 font-semibold"
-                />
-                {errors.customerName && (
-                  <p className="text-[10px] text-red-400 mt-1 font-bold">{errors.customerName}</p>
-                )}
-              </div>
-
-              {/* Customer Phone */}
-              <div className="flex flex-col">
-                <label className="text-xs uppercase tracking-wider text-white font-black mb-2 flex items-center gap-1.5">
-                  <Phone size={14} className="text-brand-yellow" />
-                  <span>6. Numéro de Mobile (+216)</span>
-                </label>
-                <input
-                  type="tel"
-                  name="customerPhone"
-                  placeholder="Ex: 29 220 220"
-                  value={formData.customerPhone}
-                  onChange={handleInputChange}
-                  className="bg-white/5 rounded-[8px] px-4 py-3 border border-white/10 text-white text-sm placeholder-white/30 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow/20 transition-all duration-300 font-semibold"
-                />
-                {errors.customerPhone && (
-                  <p className="text-[10px] text-red-400 mt-1 font-bold">{errors.customerPhone}</p>
-                )}
-              </div>
-
-              {/* Special Request or plate preselected */}
-              <div className="flex flex-col">
-                <label className="text-xs uppercase tracking-wider text-white font-black mb-2 flex items-center gap-1.5">
-                  <AlignLeft size={14} className="text-brand-yellow" />
-                  <span>7. Demandes Spéciales / Plats favoris</span>
-                </label>
-                <textarea
-                  name="specialRequests"
-                  id="special-requests"
-                  placeholder="Ex: Table en terrasse près du bord de mer, anniversaire, chaises hautes..."
-                  rows={2}
-                  value={formData.specialRequests}
-                  onChange={handleInputChange}
-                  className="bg-white/5 rounded-[8px] px-4 py-3 border border-white/10 text-white text-xs placeholder-white/30 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow/20 transition-all duration-300 resize-none font-semibold"
-                />
-              </div>
-
+            {/* Phone */}
+            <div>
+              <label className="block text-sm font-semibold text-brand-navy mb-2">
+                📱 Votre numéro de téléphone *
+              </label>
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={(e) => set('phone', e.target.value)}
+                placeholder="98 900 372"
+                className="w-full px-4 py-3 rounded-lg border font-sans text-sm text-brand-navy placeholder:text-gray-400 transition-all duration-200 focus:outline-none"
+                style={{
+                  borderRadius: '8px',
+                  border: errors.phone ? '1px solid #DC2626' : '1px solid #D1D5DB',
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#F5D300';
+                  e.target.style.outline = '2px solid rgba(245,211,0,0.3)';
+                  e.target.style.outlineOffset = '0';
+                }}
+                onBlur={(e) => {
+                  e.target.style.outline = 'none';
+                  if (!errors.phone) e.target.style.borderColor = '#D1D5DB';
+                }}
+              />
+              {errors.phone && (
+                <p className="text-xs mt-1 font-medium" style={{ color: '#DC2626' }}>{errors.phone}</p>
+              )}
             </div>
 
-          </div>
-
-          <div className="w-full h-[1px] bg-white/10 my-8" />
-
-          {/* Action Choice Segment */}
-          <div className="flex flex-col gap-6 items-center">
-            
-            <span className="text-[11px] tracking-widest text-white/60 uppercase font-black leading-none text-center">
-              Choisissez votre moyen de confirmation libre
-            </span>
-
-            {/* Selector Grid */}
-            <div className="grid grid-cols-2 gap-4 w-full max-w-md">
-              <button
-                type="button"
-                onClick={() => setBookingChoice('whatsapp')}
-                className={`py-3.5 px-5 rounded-[8px] border font-black text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 ${
-                  bookingChoice === 'whatsapp'
-                    ? 'bg-brand-yellow text-brand-navy border-brand-yellow'
-                    : 'bg-white/5 text-white/70 border-white/10 hover:bg-white/10'
-                }`}
+            {/* Guests */}
+            <div>
+              <label className="block text-sm font-semibold text-brand-navy mb-2">
+                👥 Nombre de personnes *
+              </label>
+              <select
+                value={form.guests}
+                onChange={(e) => set('guests', parseInt(e.target.value))}
+                className="w-full px-4 py-3 rounded-lg border font-sans text-sm text-brand-navy bg-white cursor-pointer transition-all duration-200 focus:outline-none"
+                style={{
+                  borderRadius: '8px',
+                  border: errors.guests ? '1px solid #DC2626' : '1px solid #D1D5DB',
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#F5D300';
+                  e.target.style.outline = '2px solid rgba(245,211,0,0.3)';
+                  e.target.style.outlineOffset = '0';
+                }}
+                onBlur={(e) => {
+                  e.target.style.outline = 'none';
+                  if (!errors.guests) e.target.style.borderColor = '#D1D5DB';
+                }}
               >
-                <MessageSquare size={16} />
-                <span>Via WhatsApp</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setBookingChoice('call')}
-                className={`py-3.5 px-5 rounded-[8px] border font-black text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 ${
-                  bookingChoice === 'call'
-                    ? 'bg-brand-yellow text-brand-navy border-brand-yellow'
-                    : 'bg-white/5 text-white/70 border-white/10 hover:bg-white/10'
-                }`}
-              >
-                <Phone size={16} />
-                <span>Appel Direct</span>
-              </button>
+                {Array.from({ length: 20 }, (_, i) => i + 1).map((n) => (
+                  <option key={n} value={n}>{n} personne{n > 1 ? 's' : ''}</option>
+                ))}
+              </select>
+              {errors.guests && (
+                <p className="text-xs mt-1 font-medium" style={{ color: '#DC2626' }}>{errors.guests}</p>
+              )}
             </div>
 
-            {/* Dynamic Interactive Call to Action button */}
-            {bookingChoice === 'whatsapp' ? (
-              <button
-                onClick={() => executeReservation('whatsapp')}
-                className="w-full max-w-md py-4 rounded-[8px] font-black uppercase tracking-wider text-xs text-white bg-green-600 hover:bg-green-700 active:scale-95 transition-all duration-300 cursor-pointer shadow-lg flex items-center justify-center gap-2"
+            {/* Date */}
+            <div>
+              <label className="block text-sm font-semibold text-brand-navy mb-2">
+                📅 Date souhaitée *
+              </label>
+              <input
+                type="date"
+                value={form.date}
+                min={today}
+                onChange={(e) => set('date', e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border font-sans text-sm text-brand-navy cursor-pointer transition-all duration-200 focus:outline-none"
+                style={{
+                  borderRadius: '8px',
+                  border: errors.date ? '1px solid #DC2626' : '1px solid #D1D5DB',
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#F5D300';
+                  e.target.style.outline = '2px solid rgba(245,211,0,0.3)';
+                  e.target.style.outlineOffset = '0';
+                }}
+                onBlur={(e) => {
+                  e.target.style.outline = 'none';
+                  if (!errors.date) e.target.style.borderColor = '#D1D5DB';
+                }}
+              />
+              {errors.date && (
+                <p className="text-xs mt-1 font-medium" style={{ color: '#DC2626' }}>{errors.date}</p>
+              )}
+            </div>
+
+            {/* Time */}
+            <div>
+              <label className="block text-sm font-semibold text-brand-navy mb-2">
+                🕐 Heure souhaitée *
+              </label>
+              <select
+                value={form.time}
+                onChange={(e) => set('time', e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border font-sans text-sm text-brand-navy bg-white cursor-pointer transition-all duration-200 focus:outline-none"
+                style={{
+                  borderRadius: '8px',
+                  border: errors.time ? '1px solid #DC2626' : '1px solid #D1D5DB',
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#F5D300';
+                  e.target.style.outline = '2px solid rgba(245,211,0,0.3)';
+                  e.target.style.outlineOffset = '0';
+                }}
+                onBlur={(e) => {
+                  e.target.style.outline = 'none';
+                  if (!errors.time) e.target.style.borderColor = '#D1D5DB';
+                }}
               >
-                <MessageSquare size={16} />
-                <span>Confirmer par WhatsApp Direct</span>
-              </button>
-            ) : (
-              <button
-                onClick={() => executeReservation('call')}
-                className="w-full max-w-md py-4 rounded-[8px] font-black uppercase tracking-wider text-xs text-brand-navy bg-brand-yellow hover:bg-brand-yellow/90 active:scale-95 transition-all duration-300 cursor-pointer shadow-lg flex items-center justify-center gap-2"
-              >
-                <Phone size={16} />
-                <span>Appeler l'établissement directement</span>
-              </button>
-            )}
+                {TIME_SLOTS.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+              {errors.time && (
+                <p className="text-xs mt-1 font-medium" style={{ color: '#DC2626' }}>{errors.time}</p>
+              )}
+            </div>
 
-            <p className="text-[10px] text-white/60 leading-relaxed text-center max-w-md font-bold uppercase mt-2 flex items-center justify-center gap-1.5 tracking-wider font-mono">
-              <ShieldCheck size={12} className="text-brand-yellow" />
-              <span>Placement prioritaire bloqué pendant 15 minutes</span>
-            </p>
-
-          </div>
-
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full py-4 rounded-lg font-sans font-bold text-base uppercase tracking-wider cursor-pointer transition-all duration-300 mt-2"
+              style={{
+                backgroundColor: '#F5D300',
+                color: '#0A1F3F',
+                borderRadius: '8px',
+              }}
+              onMouseEnter={(e) => {
+                (e.target as HTMLElement).style.backgroundColor = '#E0C200';
+              }}
+              onMouseLeave={(e) => {
+                (e.target as HTMLElement).style.backgroundColor = '#F5D300';
+              }}
+            >
+              Réserver maintenant →
+            </button>
+          </form>
         </motion.div>
 
+        {/* Success message */}
+        {success && (
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mt-4 text-sm text-brand-olive font-semibold"
+          >
+            Réservation envoyée ! Ouverture de WhatsApp...
+          </motion.p>
+        )}
+
+        {/* Footer text */}
+        <p className="text-center mt-4 text-sm text-brand-muted">
+          ⚡ Sans engagement. Confirmation immédiate via WhatsApp.
+        </p>
       </div>
+
+      {/* Confetti keyframes injected once */}
+      <style>{`
+        @keyframes confetti-fall {
+          0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+          100% { opacity: 0; transform: translateY(500px) rotate(720deg) scale(0.3); }
+        }
+      `}</style>
     </section>
   );
 }

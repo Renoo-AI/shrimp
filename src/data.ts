@@ -1,154 +1,297 @@
 import { MenuItem, Branch } from './types';
 
 export const BRAND_COLORS = {
-  navy: '#003359',
+  navy: '#0A1F3F',
+  yellow: '#F5D300',
+  olive: '#8B9A3D',
   white: '#FFFFFF',
-  gold: '#EAD11B',
-  green: '#9CB421'
+  light: '#F8F6F2',
+  muted: '#6B7280',
+  error: '#DC2626',
 };
 
-export const INSTAGRAM_URL = 'https://www.instagram.com/shrimp_time_tunisia';
+export const INSTAGRAM_URL = 'https://www.instagram.com/shrimp_.time/';
+export const RESTAURANT_EMAIL = 'shrimptime270@gmail.com';
+
+export const NAV_LINKS = [
+  { id: 'hero', label: 'Accueil' },
+  { id: 'menu', label: 'Menu' },
+  { id: 'branches', label: 'Branches' },
+  { id: 'reservation', label: 'Réservation' },
+];
+
+export const MENU_CATEGORIES = [
+  { id: 'seafood_boil' as const, label: 'Fruits de Mer', arabicLabel: 'مأكولات بحرية' },
+  { id: 'crispy' as const, label: 'Fritures', arabicLabel: 'أطباق مقلية' },
+  { id: 'sides' as const, label: 'Accompagnements', arabicLabel: 'أطباق جانبية' },
+  { id: 'drinks' as const, label: 'Boissons', arabicLabel: 'مشروبات' },
+];
+
+// Unsplash photo base URL builder
+const unsplash = (id: string, w = 800) =>
+  `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
 
 export const MENU_ITEMS: MenuItem[] = [
+  // ── Fruits de Mer (Seafood Boil) ──
   {
-    id: 'e1',
-    name: 'Crevettes Dynamite',
-    category: 'entrées',
-    price: 28,
-    description: 'Crevettes croustillantes dorées à la perfection, enrobées de notre sauce Dynamite secrète, onctueuse et légèrement piquante, parsemées de ciboule fraîche.',
-    badge: 'Populaire',
-    tags: ['Best-Seller', 'Piquant'],
-    image: 'https://images.unsplash.com/photo-1625938146369-adc83368bda7?q=80&w=800&auto=format&fit=crop'
+    id: 'sb1',
+    name: 'Crevettes 12 Pièces',
+    category: 'seafood_boil',
+    price: 49,
+    description: '12 crevettes + riz + salade',
+    emoji: '🦐',
+    image: '/crevettes-12.webp',
   },
   {
-    id: 'e2',
-    name: 'Calamars Croquants au Citron',
-    category: 'entrées',
-    price: 24,
-    description: 'Anneaux de calamars tendres panés et servis croustillants avec un quartier de citron bio de Tunisie et notre mayonnaise maison parfumée à l\'ail doux.',
-    badge: 'Nouveau',
-    tags: ['Croustillant'],
-    image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop'
+    id: 'sb2',
+    name: 'Crevettes 6 Pièces',
+    category: 'seafood_boil',
+    price: 29,
+    description: '6 crevettes + riz + salade',
+    emoji: '🦐',
+    image: unsplash('1625938146369-adc83368bda7'),
   },
   {
-    id: 'e3',
-    name: 'Soupe de Fruits de Mer Safranée',
-    category: 'entrées',
-    price: 19,
-    description: 'Un bouillon marin riche et réconfortant infusé au safran de la Méditerranée, garni de moules, calamars et crevettes, accompagné de croûtons aillés.',
-    tags: ['Chaud', 'Traditionnel'],
-    image: 'https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop'
+    id: 'sb3',
+    name: 'Moules',
+    category: 'seafood_boil',
+    price: 25,
+    description: 'Moules fraîches, portion généreuse',
+    emoji: '🦪',
+    image: unsplash('1565557623262-b51c2513a641'),
   },
   {
-    id: 'e4',
-    name: 'Salade de Poulpe de Sfax',
-    category: 'entrées',
-    price: 26,
-    description: 'Poulpe local tendre cuit lentement, mariné dans une huile d\'olive extra-vierge parfumée aux herbes fines, coriandre fraîche, oignons rouges et poivrons colorés.',
-    badge: 'Signature',
-    tags: ['Frais', 'Produit Local'],
-    image: 'https://images.unsplash.com/photo-1534080391025-a77c4e5fbfcc?q=80&w=800&auto=format&fit=crop'
+    id: 'sb4',
+    name: 'Crabe',
+    category: 'seafood_boil',
+    price: 25,
+    description: 'Crabe entier préparé',
+    emoji: '🦀',
+    image: unsplash('1559737558-2f5a35f4523b'),
   },
   {
-    id: 'p1',
-    name: 'Le Seau "Shrimp Time" Signature',
-    category: 'plats',
-    price: 53,
-    description: 'Notre légendaire seau de fruits de mer garni d\'un généreux mélange de crevettes sauvages, moules fraîches, pinces de crabe et maïs doux cuit à la vapeur. Le tout nappé d\'une sauce de votre choix : Cajun Épicé, Beurre d\'Ail Aromatic ou Coco Curry. Servi chaud avec son riz blanc.',
-    badge: 'Signature',
-    tags: ['Incontournable', 'À Partager'],
-    image: 'https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?q=80&w=800&auto=format&fit=crop'
+    id: 'sb5',
+    name: 'Mix Fruits de Mer (2 Pers.)',
+    category: 'seafood_boil',
+    price: 80,
+    description: '8 crevettes, 2 crabes, 8 moules, 250g poulpe, 250g calamar',
+    emoji: '🦞',
+    image: unsplash('1615141982883-c7ad0e69fd62'),
   },
   {
-    id: 'p2',
-    name: 'Pâtes Noires à l\'Encre de Seiche',
-    category: 'plats',
-    price: 38,
-    description: 'Spaghettoni artisanales teintées à l\'encre de seiche naturelle, sautées à la poêle avec des crevettes fraîches decortiquées, des tomates cerises confites et un filet d\'huile d\'olive sauvage au piment doux.',
-    tags: ['Gastronomique'],
-    image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop'
+    id: 'sb6',
+    name: 'Langouste',
+    category: 'seafood_boil',
+    price: 120,
+    description: 'Langouste grillée + riz + salade',
+    emoji: '🦞',
+    image: unsplash('1564093497595-593b96d80180'),
   },
   {
-    id: 'p3',
-    name: 'Brochettes de Crevettes Royales',
-    category: 'plats',
-    price: 48,
-    description: 'Grosses crevettes royales tunisiennes grillées au feu de bois de braises, badigeonnées d\'un beurre d\'herbes marines, servies avec un riz safrané parfumé et légumes croquants grillés.',
-    badge: 'Populaire',
-    tags: ['Grillades'],
-    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800&auto=format&fit=crop'
+    id: 'sb7',
+    name: 'Mix Fruits de Mer (4 Pers.)',
+    category: 'seafood_boil',
+    price: 270,
+    description: '1 kg de chaque : calamar, poulpe, crevettes, crabe, moules',
+    emoji: '🦐',
+    image: unsplash('1514933651103-005eec06c04b'),
+  },
+
+  // ── Fritures (Crispy Selection) ──
+  {
+    id: 'cr1',
+    name: 'Frites',
+    category: 'crispy',
+    price: 5,
+    description: 'Frites dorées maison',
+    emoji: '🍟',
+    image: unsplash('1518013431117-eb1465fa5752'),
   },
   {
-    id: 'p4',
-    name: 'Pavé de Loup de Mer au Beurre Citronné',
-    category: 'plats',
-    price: 42,
-    description: 'Filet de loup de mer de nos côtes dore sur peau, accompagné d\'une sauce émulsionnée au beurre noisette, jus de citron jaune et câpres de Hammamet. Servi avec purée de pommes de terre à l\'huile d\'olive.',
-    tags: ['Frais du Jour'],
-    image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800&auto=format&fit=crop'
+    id: 'cr2',
+    name: 'Frites Cajun',
+    category: 'crispy',
+    price: 7,
+    description: 'Frites assaisonnées au cajun épicé',
+    emoji: '🍟',
+    image: unsplash('1585109649139-366815a0d713'),
   },
   {
-    id: 'd1',
-    name: 'Fondant Coulant au Chocolat Noir',
-    category: 'desserts',
+    id: 'cr3',
+    name: 'Filet de Poulet',
+    category: 'crispy',
     price: 15,
-    description: 'Cœur chocolaté intensément coulant, préparé minute et servi chaud avec une boule de glace artisanale à la vanille de Madagascar.',
-    tags: ['Gourmand'],
-    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=800&auto=format&fit=crop'
+    description: 'Filet de poulet croustillant',
+    emoji: '🍗',
+    image: unsplash('1604503468506-a8da13d82791'),
   },
   {
-    id: 'd2',
-    name: 'Tiramisu au Citron de Tunisie',
-    category: 'desserts',
-    price: 14,
-    description: 'Une réinterprétation fraîche et acidulée du classique italien, associant une crème mascarpone aérienne à un lemon curd onctueux fait maison à partir de citrons cueillis en Tunisie.',
-    badge: 'Nouveau',
-    tags: ['Frais', 'Best-Seller'],
-    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=800&auto=format&fit=crop'
+    id: 'cr4',
+    name: 'Fish & Chips Enfant',
+    category: 'crispy',
+    price: 17,
+    description: 'Portion enfant — poisson pané + frites',
+    emoji: '🐟',
+    image: unsplash('1611599537845-1c7aca0091c0'),
   },
   {
-    id: 'd3',
-    name: 'Crème d\'Amandes à la Fleur d\'Oranger',
-    category: 'desserts',
+    id: 'cr5',
+    name: 'Calamars Frits',
+    category: 'crispy',
+    price: 23,
+    description: 'Anneaux de calamar croustillants',
+    emoji: '🦑',
+    image: unsplash('1599487488170-d11ec9c172f0'),
+  },
+  {
+    id: 'cr6',
+    name: 'Crevettes Frites',
+    category: 'crispy',
+    price: 23,
+    description: 'Crevettes croustillantes panées',
+    emoji: '🦐',
+    image: unsplash('1625938146369-adc83368bda7'),
+  },
+  {
+    id: 'cr7',
+    name: 'Fish & Chips Adulte',
+    category: 'crispy',
+    price: 28,
+    description: 'Poisson pané, frites, sauce tartare',
+    emoji: '🐟',
+    image: unsplash('1611599537845-1c7aca0091c0'),
+  },
+  {
+    id: 'cr8',
+    name: 'Mix Friture Fruits de Mer',
+    category: 'crispy',
+    price: 35,
+    description: 'Poisson, calamar, crevettes — trio croustillant',
+    emoji: '🦑',
+    image: unsplash('1599487488170-d11ec9c172f0'),
+  },
+
+  // ── Accompagnements (Side Dishes) ──
+  {
+    id: 'sd1',
+    name: 'Sauce Tartare',
+    category: 'sides',
+    price: 2,
+    description: 'Sauce tartare maison',
+    emoji: '🥄',
+  },
+  {
+    id: 'sd2',
+    name: 'Sauce Dynamite',
+    category: 'sides',
+    price: 2,
+    description: 'Sauce épicée signature',
+    emoji: '🥄',
+  },
+  {
+    id: 'sd3',
+    name: 'Sauce Cajun',
+    category: 'sides',
+    price: 3,
+    description: 'Sauce relevée au cajun',
+    emoji: '🥄',
+  },
+  {
+    id: 'sd4',
+    name: 'Sauce Citron & Ail',
+    category: 'sides',
+    price: 3,
+    description: 'Sauce fraîche citronnée à l\'ail',
+    emoji: '🥄',
+  },
+  {
+    id: 'sd5',
+    name: 'Salade',
+    category: 'sides',
+    price: 3.5,
+    description: 'Salade verte fraîche',
+    emoji: '🥗',
+  },
+  {
+    id: 'sd6',
+    name: 'Riz',
+    category: 'sides',
+    price: 3.5,
+    description: 'Riz blanc parfumé',
+    emoji: '🍚',
+  },
+  {
+    id: 'sd7',
+    name: 'Soupe',
+    category: 'sides',
     price: 12,
-    description: 'Douceur crémeuse subtilement parfumée à l\'eau de fleur d\'oranger distillée à Nabeul, recouverte d\'amandes effilées de Sfax sablées et torréfiées au miel.',
-    tags: ['Tunisian Twist'],
-    image: 'https://images.unsplash.com/photo-1541795795328-f073b763494e?q=80&w=800&auto=format&fit=crop'
-  }
+    description: 'Soupe de fruits de mer maison',
+    emoji: '🍜',
+    image: unsplash('1547592180-85f173990554'),
+  },
+
+  // ── Boissons (Drinks) ──
+  {
+    id: 'dr1',
+    name: 'Eau Minérale',
+    category: 'drinks',
+    price: 1,
+    description: 'Bouteille d\'eau minérale',
+    emoji: '💧',
+  },
+  {
+    id: 'dr2',
+    name: 'Boissons Gazeuses',
+    category: 'drinks',
+    price: 3,
+    description: 'Coca-Cola, Fanta, Sprite, etc.',
+    emoji: '🥤',
+  },
+  {
+    id: 'dr3',
+    name: 'Jus de Citron',
+    category: 'drinks',
+    price: 3.5,
+    description: 'Citronnade fraîche maison',
+    emoji: '🍋',
+    image: unsplash('1621263764928-df1444c5e859'),
+  },
 ];
+
+export const MENU_NOTE = 'Sauces disponibles : Crème, Cajun, Citron & Ail.';
 
 export const BRANCHES: Branch[] = [
   {
-    id: 'marsa_zephyr',
-    name: 'Shrimp Time — La Marsa (En face de Zephyr)',
-    address: 'Avenue Habib Bourguiba (En face de Zephyr), La Marsa, Tunis 2070',
-    mapLink: 'https://www.google.com/maps/search/?api=1&query=Shrimp+Time+Le+Zephyr+La+Marsa',
+    id: 'marsa',
+    name: 'La Marsa',
+    address: 'La Marsa Plage, face à Zephyr',
     phone: '+21698900372',
     phoneDisplay: '98 900 372',
-    hours: 'Mardi - Dimanche : 12:00 - 23:30 (Fermé le Lundi)',
-    ambiance: 'Idéalement situé au cœur de La Marsa Plage, juste en face du centre commercial Le Zéphyr. Un espace vibrant et animé pour de superbes moments gourmands.',
-    coordinates: { lat: 36.8778, lng: 10.3262 }
-  },
-  {
-    id: 'marsa_plage',
-    name: 'Shrimp Time — La Marsa Plage (En face de Kobbet El Haoua)',
-    address: 'Avenue de la République (En face de Kobbet El Haoua), La Marsa Plage, Tunis 2070',
-    mapLink: 'https://www.google.com/maps/search/?api=1&query=Kobbet+El+Haoua+La+Marsa',
-    phone: '+21698900372',
-    phoneDisplay: '98 900 372',
-    hours: 'Mardi - Dimanche : 12:00 - 23:30 (Fermé le Lundi)',
-    ambiance: 'Une adresse côtière irrésistible face à l’emblématique Kobbet El Haoua, pour savourer vos seaux de fruits de mer bercés par la brise maritime méditerranéenne.',
-    coordinates: { lat: 36.8814, lng: 10.3344 }
   },
   {
     id: 'aouina',
-    name: 'Shrimp Time — L\'Aouina (Sous Centre Médical Aïcha)',
-    address: 'Avenue Khaled Ibn El Walid (Cité El Wahat, sous Centre Médical Aïcha), L\'Aouina, Tunis 2045',
-    mapLink: 'https://www.google.com/maps/search/?api=1&query=Centre+Medical+Aicha+L\'Aouina',
-    phone: '+21658900792',
-    phoneDisplay: '58 900 792',
-    hours: 'Mardi - Dimanche : 12:00 - 23:30 (Fermé le Lundi)',
-    ambiance: 'Un havre contemporain aux accents bois flotté et lumières tamisées raffinées, niché au rez-de-chaussée sous le pôle médical Aïcha à la Cité El Wahat.',
-    coordinates: { lat: 36.8521, lng: 10.2642 }
-  }
+    name: "L'Aouina",
+    address: 'Sous le Centre Médical Aïcha, Cité El Wahat',
+    phone: '+21698900372',
+    phoneDisplay: '98 900 372',
+  },
 ];
+
+export const TIME_SLOTS = [
+  '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
+  '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30',
+];
+
+export const RESERVATION_FORM_INITIAL: {
+  branch: string;
+  phone: string;
+  guests: number;
+  date: string;
+  time: string;
+} = {
+  branch: 'marsa',
+  phone: '',
+  guests: 2,
+  date: '',
+  time: '19:00',
+};
