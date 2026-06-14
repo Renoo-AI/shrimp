@@ -78,13 +78,32 @@ export default function App() {
         {loading && (
           <motion.div
             key="preloader"
-            initial={{ y: 0 }}
-            exit={{ y: '-100%' }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[100] bg-[#001C33] flex flex-col justify-center items-center select-none border-b border-brand-yellow/30 shadow-[0_15px_50px_rgba(0,0,0,0.8)]"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center select-none"
           >
-            <div className="flex flex-col items-center max-w-xs w-full px-6">
-              {/* Pulsing Logo */}
+            {/* Top panel */}
+            <motion.div
+              initial={{ y: 0 }}
+              exit={{ y: '-100%' }}
+              transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+              className="absolute top-0 left-0 w-full h-1/2 bg-[#001C33] border-b border-brand-yellow/20"
+            />
+            {/* Bottom panel */}
+            <motion.div
+              initial={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+              className="absolute bottom-0 left-0 w-full h-1/2 bg-[#001C33]"
+            />
+
+            {/* Central Content */}
+            <motion.div
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="relative z-10 flex flex-col items-center max-w-xs w-full px-6 text-center"
+            >
+              {/* Pulsing Logo & Glow */}
               <motion.div
                 animate={{ 
                   scale: [0.95, 1.05, 0.95],
@@ -94,8 +113,10 @@ export default function App() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="mb-8"
+                className="mb-8 relative"
               >
+                {/* Golden background aura */}
+                <div className="absolute inset-0 bg-brand-yellow/15 rounded-full blur-xl scale-150 animate-pulse pointer-events-none" />
                 <ShrimpLogo size={100} showText={false} />
               </motion.div>
               
@@ -116,7 +137,7 @@ export default function App() {
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
