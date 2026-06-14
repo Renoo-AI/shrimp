@@ -1,197 +1,82 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from './components/Navbar';
 import MenuSection from './components/MenuSection';
 import BranchesSection from './components/BranchesSection';
 import ReservationSection from './components/ReservationSection';
 import { INSTAGRAM_URL, BRANCHES, RESTAURANT_EMAIL, RESTAURANT_HOURS } from './data';
 import { motion } from 'motion/react';
-import { Phone, Mail, MapPin, Instagram, Facebook, Star, Citrus, Calendar, Flame } from 'lucide-react';
 
 const VID = [1, 2, 3][Math.floor(Math.random() * 3)];
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
 export default function App() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
-
-  useEffect(() => {
-    const tryUnmute = () => {
-      if (videoRef.current) {
-        videoRef.current.muted = false;
-        videoRef.current.play().then(() => {
-          setIsMuted(false);
-        }).catch((err) => {
-          console.log('Playback policy blocked audio autoplay', err);
-        });
-      }
-      // Remove listener after first interaction
-      window.removeEventListener('click', tryUnmute);
-      window.removeEventListener('touchstart', tryUnmute);
-      window.removeEventListener('scroll', tryUnmute);
-    };
-
-    window.addEventListener('click', tryUnmute);
-    window.addEventListener('touchstart', tryUnmute);
-    window.addEventListener('scroll', tryUnmute);
-
-    return () => {
-      window.removeEventListener('click', tryUnmute);
-      window.removeEventListener('touchstart', tryUnmute);
-      window.removeEventListener('scroll', tryUnmute);
-    };
-  }, []);
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      const targetMuted = !videoRef.current.muted;
-      videoRef.current.muted = targetMuted;
-      setIsMuted(targetMuted);
-      if (!targetMuted) {
-        videoRef.current.play().catch(() => {});
-      }
-    }
-  };
-
   return (
-    <main className="min-h-screen antialiased bg-white text-navy">
+    <main className="min-h-screen antialiased bg-white text-navy font-sans">
       <Navbar />
 
-      {/* ═══════════ HERO — Video Background ═══════════ */}
-      <section id="hero" className="relative min-h-[105vh] flex items-center justify-center overflow-hidden">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted={isMuted}
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          style={{ filter: 'brightness(0.35) saturate(1.2)' }}
-        >
+      {/* ═══════════════ HERO — Video Background, Navy Overlay ═══════════════ */}
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ background: '#0A1F3F' }}>
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-[0.15]">
           <source src={`/${VID}.mp4`} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-navy/60 via-navy/35 to-navy/75" />
-        <div className="absolute inset-0 z-[2] pointer-events-none opacity-[0.025]"
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E")`, backgroundSize: '200px' }} />
+        <div className="absolute inset-0 z-0 bg-navy/60" />
 
-        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl w-full pt-8">
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}>
-            <img src="/logo.png" alt="Shrimp Time" className="w-[170px] md:w-[220px] h-auto mx-auto mb-14 md:mb-16" style={{ filter: 'drop-shadow(0 4px 24px rgba(245,211,0,0.25)) brightness(1.1)' }} />
+        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-3xl w-full">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}>
+            <img src="/logo.png" alt="Shrimp Time logo" className="w-[200px] md:w-[300px] h-auto mx-auto mb-12"
+              style={{ filter: 'drop-shadow(0 4px 20px rgba(245,211,0,0.2))' }} />
           </motion.div>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="display text-[11vw] md:text-[100px] text-white tracking-tight leading-[0.86]" style={{ textShadow: '0 2px 40px rgba(0,0,0,0.4)' }}>
-            Fruits de<br />Mer Frais
-          </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.7 }}
-            className="label-s tracking-[0.2em] mt-8 text-yellow">
-            La Marsa & L'Aouina — Tunis
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-olive font-sans text-lg uppercase tracking-[2px] mb-10 font-semibold">
+            Vivez l'expérience
           </motion.p>
-          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 0.9 }}
-            className="w-12 h-[2px] rounded-full mt-6" style={{ background: 'rgba(245,211,0,0.4)' }} />
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row gap-4 mt-14">
-            <button onClick={() => go('menu')} className="btn-yellow px-10 py-4 text-base flex items-center gap-2">
-              <Flame size={16} />
-              <span>Voir le Menu</span>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4">
+            <button onClick={() => go('menu')} className="btn-yellow text-base px-10 py-4">
+              📖 Voir le Menu
             </button>
-            <button onClick={() => go('reservation')} className="btn-ghost text-white border-white/40 hover:border-white hover:bg-white/10 px-10 py-4 text-base flex items-center gap-2">
-              <Calendar size={16} />
-              <span>Réserver une Table</span>
+            <button onClick={() => go('reservation')} className="btn-outline-white text-base px-10 py-4">
+              📞 Réserver
             </button>
-          </motion.div>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}
-            className="mt-20 md:mt-28 flex flex-col items-center gap-3">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/25 font-sans font-semibold">Découvrir</span>
-            <motion.span animate={{ y: [0, 6, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-5 h-8 rounded-full border border-white/15 flex items-start justify-center p-1">
-              <span className="w-1 h-2 rounded-full bg-yellow/60" />
-            </motion.span>
           </motion.div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-24 z-[3] pointer-events-none" style={{ background: 'linear-gradient(to top, #F8F6F2, transparent)' }} />
       </section>
 
+      {/* ═══════════════ BRANCHES — #FFFFFF ═══════════════ */}
       <BranchesSection />
+
+      {/* ═══════════════ MENU — #F8F6F2 ═══════════════ */}
       <MenuSection />
+
+      {/* ═══════════════ RESERVATION — #FFFFFF ═══════════════ */}
       <ReservationSection />
 
-      {/* ═══════════ FOOTER ═══════════ */}
-      <footer className="py-16 px-6 md:px-10" style={{ background: '#0A1F3F' }}>
-        <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 mb-12">
-            <div>
-              <img src="/logo.png" alt="Shrimp Time" className="h-10 w-auto mb-5" style={{ filter: 'brightness(2)' }} />
-              <p className="italic-s text-base text-white/55 mb-4">عيش التجربة</p>
-              <p className="text-xs text-white/30 font-sans leading-relaxed">
-                Fruits de mer frais · Ambiance premium<br />
-                Deux branches à Tunis
-              </p>
-            </div>
-            <div>
-              <h4 className="label-s text-white/50 mb-4">Contact</h4>
-              <p className="text-sm text-white/60 mb-2.5 flex items-center gap-2">
-                <Phone size={14} className="text-[#F5D300]" />
-                <span>{BRANCHES[0].phoneDisplay}</span>
-              </p>
-              <p className="text-sm text-white/60 mb-2.5 flex items-center gap-2">
-                <Mail size={14} className="text-[#F5D300]" />
-                <span>{RESTAURANT_EMAIL}</span>
-              </p>
-              <p className="text-sm text-white/60 flex items-center gap-2">
-                <MapPin size={14} className="text-[#F5D300]" />
-                <span>{BRANCHES.map(b => b.name).join(' · ')}</span>
-              </p>
-            </div>
-            <div>
-              <h4 className="label-s text-white/50 mb-4">Horaires</h4>
-              <p className="text-sm text-white/60 mb-4">{RESTAURANT_HOURS}</p>
-              <div className="flex gap-4">
-                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-xs text-white/40 hover:text-yellow transition-colors font-sans font-semibold flex items-center gap-1.5">
-                  <Instagram size={13} />
-                  <span>Instagram</span>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61559768967974" target="_blank" rel="noopener noreferrer" className="text-xs text-white/40 hover:text-yellow transition-colors font-sans font-semibold flex items-center gap-1.5">
-                  <Facebook size={13} />
-                  <span>Facebook</span>
-                </a>
-              </div>
-            </div>
+      {/* ═══════════════ FOOTER — #0A1F3F ═══════════════ */}
+      <footer className="py-20 px-6 md:px-10" style={{ background: '#0A1F3F' }}>
+        <div className="max-w-[1200px] mx-auto text-center">
+          <img src="/logo.png" alt="Shrimp Time" className="h-10 w-auto mx-auto mb-6 brightness-200" />
+          <p className="font-serif text-lg font-bold tracking-widest text-white mb-1">SHRIMP TIME</p>
+          <p className="text-xs text-olive font-sans font-semibold tracking-wider mb-6">عيش التجربة</p>
+          
+          <p className="text-sm text-white/50 mb-2">📍 {BRANCHES.map(b => b.name).join(' & ')}</p>
+          <p className="text-sm text-white/50 mb-4">📞 {BRANCHES[0].phoneDisplay} &nbsp; ✉️ {RESTAURANT_EMAIL}</p>
+          <p className="text-sm text-white/30 mb-6">{RESTAURANT_HOURS}</p>
+
+          <div className="flex items-center justify-center gap-6 mb-8">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-yellow transition-colors font-sans font-semibold">📸 @shrimp_.time</a>
+            <a href="https://www.facebook.com/profile.php?id=61559768967974" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-yellow transition-colors font-sans font-semibold">🟦 Facebook</a>
           </div>
-          <div className="border-t border-white/[0.06] pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2 text-xs text-white/30">
-              <span className="flex items-center gap-1">
-                <Star size={12} className="text-[#F5D300] fill-[#F5D300] align-middle" />
-                <span>4.4 ★ (394 avis)</span>
-              </span>
-              <span className="text-white/15">·</span>
-              <span className="flex items-center gap-1">
-                <Citrus size={12} className="text-[#F5D300]" />
-                <span>Fresh daily</span>
-              </span>
-            </div>
-            <p className="text-xs text-white/20 font-sans">
-              &copy; {new Date().getFullYear()} Shrimp Time. Tous droits réservés. <span className="text-white/10">·</span> <span className="text-white/15">Mentions légales</span>
-            </p>
-          </div>
+
+          <div className="w-12 h-px bg-white/10 mx-auto mb-6" />
+          <p className="text-xs text-white/30">&copy; {new Date().getFullYear()} Shrimp Time. Tous droits réservés.</p>
         </div>
       </footer>
-
-      {/* Floating Sound Toggle */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-        <div className="bg-[#0A1F3F]/80 border border-[#F5D300]/30 backdrop-blur-md text-white text-[10px] font-sans font-bold tracking-wider py-2 px-3 rounded-lg shadow-xl select-none hidden sm:block">
-          {isMuted ? 'SOUND OFF' : 'SOUND ON'}
-        </div>
-        <button
-          onClick={toggleMute}
-          className="w-12 h-12 rounded-full flex items-center justify-center border-2 border-[#F5D300] bg-[#0A1F3F] text-white hover:bg-[#F5D300] hover:text-[#0A1F3F] transition-all duration-300 shadow-2xl cursor-pointer hover:scale-105"
-          aria-label={isMuted ? 'Unmute sound' : 'Mute sound'}
-        >
-          {isMuted ? (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
-          ) : (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="animate-pulse text-[#F5D300]"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-          )}
-        </button>
-      </div>
     </main>
   );
 }
