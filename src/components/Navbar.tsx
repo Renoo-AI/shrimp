@@ -98,22 +98,34 @@ export default function Navbar({ currentPath, navigateTo }: NavbarProps) {
             <ShrimpLogo size={isScrolled ? 34 : 42} showText={false} />
           </motion.div>
           
-          <div className={`flex flex-col transition-all duration-300 origin-left ${
-            isScrolled ? 'opacity-0 max-w-0 overflow-hidden scale-x-0' : 'opacity-100 max-w-[200px] scale-x-100'
-          }`}>
+          <motion.div 
+            animate={{
+              width: isScrolled ? 0 : 'auto',
+              opacity: isScrolled ? 0 : 1,
+              scale: isScrolled ? 0.8 : 1
+            }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col overflow-hidden whitespace-nowrap origin-left"
+          >
             <span className="font-serif font-black text-white text-base tracking-widest leading-none group-hover:text-brand-yellow transition-colors duration-300">
               SHRIMP TIME
             </span>
             <span className="text-[9px] text-brand-green font-arabic font-black self-start tracking-widest mt-0.5">
               عيش التجربة
             </span>
-          </div>
+          </motion.div>
         </div>
 
         {/* Desktop Anchor Menu Links: hidden on scroll */}
-        <div className={`hidden md:flex items-center gap-8 transition-all duration-300 ${
-          isScrolled ? 'opacity-0 max-w-0 overflow-hidden pointer-events-none scale-x-0' : 'opacity-100 max-w-[500px] scale-x-100'
-        }`}>
+        <motion.div 
+          animate={{
+            width: isScrolled ? 0 : 'auto',
+            opacity: isScrolled ? 0 : 1,
+            scale: isScrolled ? 0.9 : 1
+          }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="hidden md:flex items-center gap-8 overflow-hidden whitespace-nowrap origin-center"
+        >
           {[
             { id: 'hero', label: 'Accueil' },
             { id: 'menu', label: 'Notre Menu' },
@@ -139,7 +151,7 @@ export default function Navbar({ currentPath, navigateTo }: NavbarProps) {
               </button>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* CTA and Menu Actions */}
         <div className="flex items-center gap-2">

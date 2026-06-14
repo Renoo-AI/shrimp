@@ -120,12 +120,22 @@ export default function App() {
                 <ShrimpLogo size={100} showText={false} />
               </motion.div>
               
-              <h2 className="font-serif text-2xl font-black text-white tracking-widest uppercase mb-1">
+              <motion.h2 
+                initial={{ opacity: 0, letterSpacing: '0.1em' }}
+                animate={{ opacity: 1, letterSpacing: '0.3em' }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="font-serif text-2xl font-black text-white uppercase mb-2 pr-[-0.3em]"
+              >
                 Shrimp Time
-              </h2>
-              <p className="text-[10px] text-brand-green font-arabic font-black tracking-widest mb-10">
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, letterSpacing: '0.15em' }}
+                animate={{ opacity: 0.6, letterSpacing: '0.3em' }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+                className="text-[9px] text-brand-green font-arabic font-black mb-10 pr-[-0.3em]"
+              >
                 عيش التجربة
-              </p>
+              </motion.p>
               
               <div className="w-full relative">
                 {/* Track */}
@@ -138,9 +148,24 @@ export default function App() {
                 </div>
               </div>
             </motion.div>
+
+            {/* Split panel laser line */}
+            <motion.div
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={{ scaleX: 1, opacity: 0.8 }}
+              exit={{ scaleX: 0, opacity: 0 }}
+              transition={{ 
+                animate: { duration: 0.8, ease: "easeOut" },
+                exit: { duration: 0.5, ease: "easeInOut" }
+              }}
+              className="absolute left-10 right-10 h-[1px] bg-brand-yellow/30 z-20"
+            />
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* 1. Global Floating Navbar */}
+      <Navbar currentPath={currentPath} navigateTo={navigateTo} />
 
       {/* Main site content with parallax scale and blur transition */}
       <motion.div
@@ -148,8 +173,6 @@ export default function App() {
         transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
         className="min-h-screen w-full relative"
       >
-        {/* 1. Global Floating Navbar */}
-        <Navbar currentPath={currentPath} navigateTo={navigateTo} />
 
       {/* 2. Visual Ambient Core Background (Restrained, elegant, non-neon glows) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
