@@ -1,0 +1,8 @@
+{
+  "name": "Shrimp Time Tunisia",
+  "description": "Premium Mediterranean Seafood Restaurant in Tunisia (La Marsa & L'Aouina)",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
